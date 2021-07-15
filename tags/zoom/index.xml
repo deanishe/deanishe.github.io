@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>zoom on deanishe.net</title>
+    <link>https://www.deanishe.net/tags/zoom/</link>
+    <description>Recent content in zoom on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/tags/zoom/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Workflow: Video Conferences</title>
+      <link>https://www.deanishe.net/post/2020/05/workflow-video-conferences/</link>
+      <pubDate>Fri, 01 May 2020 12:06:23 +0200</pubDate>
+      <guid>https://www.deanishe.net/post/2020/05/workflow-video-conferences/</guid>
+      <description>&lt;p&gt;An Alfred 4+ workflow that shows upcoming calendar events that are video conferences, and opens the links to them. It supports Lync, Zoom, Microsoft Teams and Google Meet out of the box, but can be easily configured to support additional services.&lt;/p&gt;
+&lt;p&gt;The workflow was inspired by &lt;a href=&#34;https://www.alfredforum.com/topic/12894-workflow-to-get-next-meeting-locationurl-and-open-it/&#34;&gt;this thread on the Alfred forum&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
+&lt;p&gt;Download &lt;a href=&#34;Video%20Conferences.alfredworkflow&#34;&gt;Video Conferences.alfredworkflow&lt;/a&gt; and double-click to install.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; You must grant the workflow/Alfred permission to access your calendars or it won&#39;t work. Obviously.&lt;/p&gt;
+&lt;h2 id=&#34;usage&#34;&gt;Usage&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;.vc [&amp;lt;query&amp;gt;]&lt;/code&gt; — Search upcoming video-conference events
+&lt;ul&gt;
+&lt;li&gt;&lt;kbd&gt;↩&lt;/kbd&gt; — Open video-conference URL in your default browser&lt;/li&gt;
+&lt;li&gt;&lt;kbd&gt;⌘↩&lt;/kbd&gt; — Show event in Calendar.app&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.vc reload&lt;/code&gt; — Force reload the cached list of events&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;configuration&#34;&gt;Configuration&lt;/h2&gt;
+&lt;p&gt;The workflow has a few knobs to turn in its configuration sheet.&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;&lt;code&gt;lookahead_days&lt;/code&gt; (default: &lt;code&gt;3&lt;/code&gt;)&lt;/dt&gt;
+&lt;dd&gt;The number of days to fetch events for.&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;max_cache_seconds&lt;/code&gt; (default: &lt;code&gt;300&lt;/code&gt;)&lt;/dt&gt;
+&lt;dd&gt;How long (in seconds, obvs) to cache the list of events for. Fetching events is pretty slow, so adjust this to find the right compromise between speed and freshness. You can refresh the cached list of events at any time by entering the search query &amp;ldquo;reload&amp;rdquo;.&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;account_1&lt;/code&gt; (default: empty)&lt;/dt&gt;
+&lt;dd&gt;Set &lt;code&gt;account_*&lt;/code&gt; variables to the names of accounts you&#39;d like to limit the search to. For example, if you only want to search your iCloud account, set &lt;code&gt;account_1&lt;/code&gt; to &lt;code&gt;iCloud&lt;/code&gt;. If you&#39;d also like to search your Nextcloud account, create another variable starting with &lt;code&gt;account_&lt;/code&gt; and set it to &lt;code&gt;Nextcloud&lt;/code&gt; etc.&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;calendar_1&lt;/code&gt;, &lt;code&gt;calendar_2&lt;/code&gt; (default: empty)&lt;/dt&gt;
+&lt;dd&gt;As with &lt;code&gt;account_*&lt;/code&gt; variables, you can use variables starting with &lt;code&gt;calendar_&lt;/code&gt; to restrict the search to only calendars whose names match the variables, e.g. if you&#39;ve set &lt;code&gt;calendar_1&lt;/code&gt; to &lt;code&gt;Work&lt;/code&gt;, only calendars named &amp;ldquo;Work&amp;rdquo; will be searched.&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;regex_zoom&lt;/code&gt;, &lt;code&gt;regex_lync&lt;/code&gt; etc.&lt;/dt&gt;
+&lt;dd&gt;Variables starting with &lt;code&gt;regex_&lt;/code&gt; are used to search for video conference URLs. There are currently regular expressions for Zoom, Lync and Google Meet. Add new variables starting with &lt;code&gt;regex_&lt;/code&gt; to add regular expressions that match the URLs of other services you&#39;d like to add.&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h2 id=&#34;changelog&#34;&gt;Changelog&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;v0.1.4&lt;/strong&gt; (2021-06-17)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Add regex for new Microsoft Teams URL format&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;v0.1.3&lt;/strong&gt; (2020-11-20)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Add support for Microsoft Teams&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;v0.1.2&lt;/strong&gt; (2020-11-19)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Smarter date parsing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;v0.1.1&lt;/strong&gt; (2020-05-19)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Re-open workflow after force reload&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;v0.1.0&lt;/strong&gt; (2020-05-18)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fix Zoom regex to match meeting URLs without a password&lt;/li&gt;
+&lt;li&gt;Shorten default cache period to 5 minutes&lt;/li&gt;
+&lt;li&gt;Fix reload logic&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;v0.0.3&lt;/strong&gt; (2020-05-16)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Add additional Zoom regex&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;v0.0.2&lt;/strong&gt; (2020-05-04)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Show ongoing meetings&lt;/li&gt;
+&lt;li&gt;Add support for Google Meet&lt;/li&gt;
+&lt;li&gt;Event icons have the same colour as their calendars&lt;/li&gt;
+&lt;li&gt;Add alternate action &lt;kbd&gt;⌘↩&lt;/kbd&gt; to show event in Calendar.app&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;v0.0.1&lt;/strong&gt; (2020-05-02)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Initial release&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+  </channel>
+</rss>

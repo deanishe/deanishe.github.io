@@ -1,0 +1,13 @@
+{
+  "alfredworkflow" : {
+    "category" : "Productivity",
+    "readme" : "Search in App\n=============\n\nPass Alfred search query to an application by simulating ⌘F to use the app's own search function.\n\n\nConfiguration\n-------------\n\nChange `app_name` to the name of the application you'd like to search in, e.g. \"Google Chrome\", \"Safari\".\n\nIf `press_return` is set to \"1\", the workflow will simulate a ↩ keypress after entering the search query.\n\n`use_find_pasteboard` tells the workflow to put your query on macOS's find pasteboard. Native applications automatically use the contents of this pasteboard as a search query.\n\nIf this doesn't work with an application, set `use_find_pasteboard` to \"0\" and the workflow will attempt to type the query into the application's search field instead.\n\nIf the workflow is typing the query too early, alter `delay` to change how long the workflow waits for the app's Find field to activate before it attempts to enter the query.\n\nIf `wait_visible` is \"1\", workflow waits until the application is visible before trying to start a search.\n\n`timeout` is how many seconds the workflow will wait for the application's windows to appear.",
+    "createdby" : "Dean Jackson <deanishe@deanishe.net>",
+    "downloadurl" : "https://www.deanishe.net/post/2019/06/workflow-search-in-app/Search%20in%20App-0.2.alfredworkflow",
+    "version" : "0.2",
+    "bundleid" : "net.deanishe.alfred.search-in-app",
+    "description" : "Pass search query to application",
+    "name" : "Search in App",
+    "webaddress" : "https:\/\/www.deanishe.net\/post\/2019\/06\/workflow-search-in-app\/"
+  }
+}

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>variables on deanishe.net</title>
+    <link>https://www.deanishe.net/tags/variables/</link>
+    <description>Recent content in variables on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/tags/variables/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Workflow/environment variables in Alfred</title>
+      <link>https://www.deanishe.net/post/2018/10/workflow/environment-variables-in-alfred/</link>
+      <pubDate>Sun, 14 Oct 2018 00:00:00 +0000</pubDate>
+      <guid>https://www.deanishe.net/post/2018/10/workflow/environment-variables-in-alfred/</guid>
+      <description>&lt;p&gt;This is a brief look at how to get, set and save variables in code
+(i.e. in Script Filters, Run Script Actions, etc.).&lt;/p&gt;
+&lt;!-- MarkdownTOC autolink=&#34;true&#34; bracket=&#34;round&#34; levels=&#34;2,3,4,5&#34; autoanchor=&#34;true&#34; --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#setting-variables&#34;&gt;Setting variables&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#from-run-script-actions&#34;&gt;From Run Script actions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#from-script-filters&#34;&gt;From Script Filters&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#root-level-variables&#34;&gt;Root-level variables&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#item-level-variables&#34;&gt;Item-level variables&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#modifier-level-variables&#34;&gt;Modifier-level variables&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#using-variables&#34;&gt;Using variables&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#bash&#34;&gt;bash&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#python&#34;&gt;Python&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#applescript&#34;&gt;AppleScript&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#javascript-jxa&#34;&gt;JavaScript (JXA)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#php&#34;&gt;PHP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ruby&#34;&gt;Ruby&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#saving-variables&#34;&gt;Saving variables&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#applescript-1&#34;&gt;AppleScript&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#javascript-jxa-1&#34;&gt;JavaScript (JXA)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#alfred-3&#34;&gt;Alfred 3&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- /MarkdownTOC --&gt;
+&lt;p&gt;&lt;a id=&#34;introduction&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;In Alfred 2, you had one single variable to work with: the &lt;code&gt;{query}&lt;/code&gt;
+macro. Alfred 3 added the ability to specify as many variables as you
+want. &lt;a href=&#34;https://www.alfredapp.com/help/workflows/advanced/variables/&#34;&gt;Alfred&#39;s own help&lt;/a&gt; provides a great description of
+working with variables in Alfred&#39;s own UI. I&#39;m going to look more
+closely about getting and setting workflow/environment variables in
+your own code within a workflow.&lt;/p&gt;
+&lt;p&gt;First of all, it bears mentioning that all variables are strings. Sure,
+you can set a variable to a number in JSON or an array, but when it
+reaches your next script or one of Alfred&#39;s Filter Utilities, it will be
+a string. If you set a variable to an array (e.g. &lt;code&gt;[1, 2, 3, &amp;quot;mach dat Mäh mal ei&amp;quot;]&lt;/code&gt;), Alfred will turn it into a single tab-delimited string
+(&lt;code&gt;&amp;quot;1\t2\t3\tmach dat Mäh mal ei&amp;quot;&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;&lt;a id=&#34;setting-variables&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;setting-variables&#34;&gt;Setting variables&lt;/h2&gt;
+&lt;p&gt;There are several ways to set variables. The most obvious ones are in
+the &lt;a href=&#34;https://www.alfredapp.com/help/workflows/advanced/variables/#environment&#34;&gt;Workflow Environment Variables table&lt;/a&gt; in the
+workflow configuration sheet and using the &lt;a href=&#34;https://www.alfredapp.com/help/workflows/utilities/argument/&#34;&gt;Arg and Vars
+Utility&lt;/a&gt;. The configuration sheet is largely without
+magic, but in an Args and Vars Utility, you can use variable expansion
+macros: &lt;code&gt;{query}&lt;/code&gt; expands (as always) to the input (which may be a
+user-entered query or the output from a previous element), and you can
+use &lt;code&gt;{var:VARIABLE_NAME}&lt;/code&gt; macros for your own custom variables.  This
+is described in detail in the above-mentioned Alfred help pages.&lt;/p&gt;
+&lt;p&gt;More interestingly, you can also set variables via the output of your
+scripts (i.e. dynamically) by emitting appropriate JSON. How you set
+variables depends on whether you are using a Script Filter or a Run
+Script action.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NOTE: You must use the appropriate mechanism, or it won&#39;t work!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a id=&#34;from-run-script-actions&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;from-run-script-actions&#34;&gt;From Run Script actions&lt;/h3&gt;
+&lt;p&gt;Let&#39;s say your script outputs a URL, e.g. &lt;a href=&#34;https://www.google.com&#34;&gt;https://www.google.com&lt;/a&gt;.
+Normally you just do &lt;code&gt;print(&#39;https://www.google.com&#39;)&lt;/code&gt; (or &lt;code&gt;echo&lt;/code&gt; or
+&lt;code&gt;puts&lt;/code&gt;) and that gets passed as the input to the next action. To also
+pass variables, you instead emit JSON in a very specific format:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{&amp;quot;alfredworkflow&amp;quot;: {
+    &amp;quot;arg&amp;quot;: &amp;quot;https://www.google.com&amp;quot;,
+    &amp;quot;variables&amp;quot;: {&amp;quot;browser&amp;quot;: &amp;quot;Google Chrome&amp;quot;}}}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The root &lt;code&gt;alfredworkflow&lt;/code&gt; object is required. If it&#39;s missing, Alfred
+won&#39;t parse the JSON, but will pass it as-is as input to the next
+action (which can also be very useful). Your output (i.e. the next
+Action&#39;s input/&lt;code&gt;{query}&lt;/code&gt;) goes in &lt;code&gt;arg&lt;/code&gt;, and any variables you wish to
+set go in the &lt;code&gt;variables&lt;/code&gt; object.&lt;/p&gt;
+&lt;p&gt;&lt;a id=&#34;from-script-filters&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;from-script-filters&#34;&gt;From Script Filters&lt;/h3&gt;
+&lt;p&gt;You can also set workflow variables via Script Filter feedback at three
+different levels: the &lt;strong&gt;root&lt;/strong&gt; level, the &lt;strong&gt;item&lt;/strong&gt; level and the
+&lt;strong&gt;modifier&lt;/strong&gt; level. (&lt;strong&gt;Note&lt;/strong&gt;: This only applies to JSON feedback; XML
+feedback is now deprecated and does not support the features described
+here.)&lt;/p&gt;
+&lt;p&gt;In each case, variables are set via a &lt;code&gt;variables&lt;/code&gt; object at the
+appropriate level (feedback root, &lt;code&gt;item&lt;/code&gt; or &lt;code&gt;mod&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;&lt;a id=&#34;root-level-variables&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;root-level-variables&#34;&gt;Root-level variables&lt;/h4&gt;
+&lt;p&gt;Root-level variables are always passed to downstream elements
+regardless of which item is actioned. They are also passed back to the
+same Script Filter if you&#39;ve set &lt;code&gt;rerun&lt;/code&gt;, so you can use root-level
+variables to implement a &lt;a href=&#34;https://www.alfredforum.com/topic/9718-progress-bar/&#34;&gt;progress bar&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;browser&lt;/code&gt; is set to &lt;code&gt;Safari&lt;/code&gt; for all items:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{&amp;quot;variables&amp;quot;: {&amp;quot;browser&amp;quot;: &amp;quot;Safari&amp;quot;},
+ &amp;quot;items&amp;quot;: [{&amp;quot;title&amp;quot;: &amp;quot;Google&amp;quot;,
+   &amp;quot;arg&amp;quot;: &amp;quot;https://www.google.com&amp;quot;}]}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a id=&#34;item-level-variables&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;item-level-variables&#34;&gt;Item-level variables&lt;/h4&gt;
+&lt;p&gt;Item-level variables are only passed downstream when the item they&#39;re
+set on is actioned, and they override root-level variables. Root-level
+variables are also passed downstream when you action an item.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;browser&lt;/code&gt; is set to &lt;code&gt;Safari&lt;/code&gt; by default, but &lt;code&gt;Google Chrome&lt;/code&gt; for Reddit:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{&amp;quot;variables&amp;quot;: {&amp;quot;browser&amp;quot;: &amp;quot;Safari&amp;quot;},
+ &amp;quot;items&amp;quot;: [
+   {&amp;quot;title&amp;quot;: &amp;quot;Google&amp;quot;,
+     &amp;quot;arg&amp;quot;: &amp;quot;https://www.google.com&amp;quot;},
+   {&amp;quot;title&amp;quot;: &amp;quot;Reddit&amp;quot;,
+     &amp;quot;arg&amp;quot;: &amp;quot;https://reddit.com&amp;quot;,
+     &amp;quot;variables&amp;quot;: {&amp;quot;browser&amp;quot;: &amp;quot;Google Chrome&amp;quot;}}]}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a id=&#34;modifier-level-variables&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;modifier-level-variables&#34;&gt;Modifier-level variables&lt;/h4&gt;
+&lt;p&gt;Modifier-level variables are only passed downstream when the
+corresponding &lt;code&gt;item&lt;/code&gt; is actioned with the appropriate modifier key
+pressed. They &lt;strong&gt;replace&lt;/strong&gt; item-level variables (i.e. if a modifier sets
+any variables, Alfred ignores any variables set on its parent &lt;code&gt;item&lt;/code&gt;)
+and override root-level variables.&lt;/p&gt;
+&lt;p&gt;As above, &lt;code&gt;browser&lt;/code&gt; is set to &lt;code&gt;Safari&lt;/code&gt; by default and &lt;code&gt;Google Chrome&lt;/code&gt;
+for Reddit. But you can also pass &lt;code&gt;browser=Google Chrome&lt;/code&gt; for Google by
+holding ⌘ when actioning it:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{&amp;quot;variables&amp;quot;: {&amp;quot;browser&amp;quot;: &amp;quot;Safari&amp;quot;},
+ &amp;quot;items&amp;quot;: [
+   {&amp;quot;title&amp;quot;: &amp;quot;Google&amp;quot;,
+     &amp;quot;arg&amp;quot;: &amp;quot;https://www.google.com&amp;quot;,
+     &amp;quot;mods&amp;quot;: {&amp;quot;cmd&amp;quot;: {&amp;quot;variables&amp;quot;: {&amp;quot;browser&amp;quot;: &amp;quot;Google Chrome&amp;quot;}}}},
+   {&amp;quot;title&amp;quot;: &amp;quot;Reddit&amp;quot;,
+     &amp;quot;arg&amp;quot;: &amp;quot;https://reddit.com&amp;quot;,
+     &amp;quot;variables&amp;quot;: {&amp;quot;browser&amp;quot;: &amp;quot;Google Chrome&amp;quot;}}]}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a id=&#34;using-variables&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;using-variables&#34;&gt;Using variables&lt;/h2&gt;
+&lt;p&gt;So you&#39;ve set a few variables, and now you want to use them. Within
+Alfred elements like &lt;a href=&#34;https://www.alfredapp.com/help/workflows/utilities/argument/&#34;&gt;Arg and Vars&lt;/a&gt; or &lt;a href=&#34;https://www.alfredapp.com/help/workflows/utilities/filter/&#34;&gt;Filter&lt;/a&gt;
+Utilities, you use the above-mentioned &lt;code&gt;{var:VARIABLE_NAME}&lt;/code&gt; macros.
+Very simple.&lt;/p&gt;
+&lt;p&gt;Where it gets a little more complicated is in your own code. First and
+foremost, &lt;strong&gt;&lt;code&gt;{var:VARIABLE_NAME}&lt;/code&gt; macro expansion does not work in Run
+Script actions, Script Filters or any other script boxes in Alfred.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;When Alfred runs your code, it does not use &lt;code&gt;{var:...}&lt;/code&gt; macros, but
+rather takes any workflow variables and sets them as environment
+variables for your script. Using the above example again, Alfred would
+pass &amp;ldquo;&lt;a href=&#34;https://www.google.com%22&#34;&gt;https://www.google.com&amp;quot;&lt;/a&gt; to my script as input (either via ARGV or
+&lt;code&gt;{query}&lt;/code&gt; depending on the settings) and it would set the environment
+variable &lt;code&gt;browser&lt;/code&gt; to &lt;code&gt;Safari&lt;/code&gt; or &lt;code&gt;Google Chrome&lt;/code&gt;. How you retrieve
+environment variables depends on the language you&#39;re using.&lt;/p&gt;
+&lt;p&gt;&lt;a id=&#34;bash&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;bash&#34;&gt;bash&lt;/h3&gt;
+&lt;p&gt;The variables are already in the global namespace. Just use &lt;code&gt;$browser&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a id=&#34;python&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;python&#34;&gt;Python&lt;/h3&gt;
+&lt;p&gt;Use the &lt;code&gt;os.environ&lt;/code&gt; dictionary or &lt;code&gt;os.getenv(&#39;VARIABLE_NAME&#39;)&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import os
+browser = os.environ[&#39;browser&#39;]
+
+# Or
+browser = os.getenv(&#39;browser&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a id=&#34;applescript&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;applescript&#34;&gt;AppleScript&lt;/h3&gt;
+&lt;p&gt;Use &lt;code&gt;system attribute&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-applescript&#34;&gt;set theBrowser to (system attribute &amp;quot;browser&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a id=&#34;javascript-jxa&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;javascript-jxa&#34;&gt;JavaScript (JXA)&lt;/h3&gt;
+&lt;p&gt;Use &lt;code&gt;$.getenv()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;ObjC.import(&#39;stdlib&#39;);
+var browser = $.getenv(&#39;browser&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a id=&#34;php&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;php&#34;&gt;PHP&lt;/h3&gt;
+&lt;p&gt;Use &lt;code&gt;getenv()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;$browser = getenv(&#39;browser&#39;);
+
+// Or
+$browser = $_ENV[&#39;browser&#39;];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;(Please see &lt;a href=&#34;https://www.alfredforum.com/topic/9070-how-to-workflowenvironment-variables/?p=46151&#34;&gt;this comment by juliosecco&lt;/a&gt; on why you should
+use &lt;code&gt;getenv()&lt;/code&gt; over &lt;code&gt;$_ENV&lt;/code&gt;.)&lt;/p&gt;
+&lt;p&gt;&lt;a id=&#34;ruby&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;ruby&#34;&gt;Ruby&lt;/h3&gt;
+&lt;p&gt;Use &lt;code&gt;ENV&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;browser = ENV[&amp;quot;browser&amp;quot;]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a id=&#34;saving-variables&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;saving-variables&#34;&gt;Saving variables&lt;/h2&gt;
+&lt;p&gt;Any variables you set in a running workflow are &lt;strong&gt;not&lt;/strong&gt; saved. They
+exist as long as the workflow is running and then disappear. Any
+Workflow Environment Variables will &amp;ldquo;reset&amp;rdquo; to their values in the
+&lt;a href=&#34;https://www.alfredapp.com/help/workflows/advanced/variables/#environment&#34;&gt;workflow configuration sheet&lt;/a&gt; on the next run.&lt;/p&gt;
+&lt;p&gt;Generally, this is what you want, but sometimes you want to save a
+variable&#39;s value. For example, you might have an &lt;code&gt;API_KEY&lt;/code&gt; Workflow
+Environment Variable in the configuration sheet. The user can enter
+their API key for the service in the configuration sheet, but you&#39;d
+also like to add the ability to set it from within your workflow, e.g.
+with a &lt;code&gt;setapikey&lt;/code&gt; Keyword and corresponding Run Script action.&lt;/p&gt;
+&lt;p&gt;As of version 3.6, Alfred provides the &lt;code&gt;set configuration&lt;/code&gt; and
+&lt;code&gt;remove configuration&lt;/code&gt; AppleScript functions to manipulate the
+variables set in the Workflow Configuration Sheet.&lt;/p&gt;
+&lt;p&gt;&lt;a id=&#34;applescript-1&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;applescript-1&#34;&gt;AppleScript&lt;/h3&gt;
+&lt;p&gt;The following applies to  Alfred 4+. For Alfred 3, &lt;a href=&#34;#alfred-3&#34;&gt;see below&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; The &lt;code&gt;with exportable&lt;/code&gt; clause is optional. If not specified,
+the variable defaults to &amp;ldquo;Don&#39;t Export&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;To set variable &lt;code&gt;browser&lt;/code&gt; to value &lt;code&gt;Safari&lt;/code&gt; in workflow
+&lt;code&gt;net.deanishe.demo&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-applescript&#34;&gt;tell application id &amp;quot;com.runningwithcrayons.Alfred&amp;quot; to set configuration &amp;quot;browser&amp;quot; to value &amp;quot;Safari&amp;quot; in workflow &amp;quot;net.deanishe.demo&amp;quot; with exportable
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;As Alfred exports the bundle ID of the running workflow to the
+environment variable &lt;code&gt;alfred_workflow_bundleid&lt;/code&gt;, you can use this
+instead of hard-coding the bundle ID:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-applescript&#34;&gt;set bundleID to (system attribute &amp;quot;alfred_workflow_bundleid&amp;quot;)
+
+tell application id &amp;quot;com.runningwithcrayons.Alfred&amp;quot;
+    set configuration &amp;quot;browser&amp;quot; to value &amp;quot;Safari&amp;quot; in workflow bundleID with exportable
+end tell
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The corresponding call to remove a variable is:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-applescript&#34;&gt;tell application id &amp;quot;com.runningwithcrayons.Alfred&amp;quot; to remove configuration &amp;quot;browser&amp;quot; in workflow &amp;quot;net.deanishe.demo&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a id=&#34;javascript-jxa-1&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;javascript-jxa-1&#34;&gt;JavaScript (JXA)&lt;/h3&gt;
+&lt;p&gt;The following applies to  Alfred 4+. For Alfred 3, &lt;a href=&#34;#alfred-3&#34;&gt;see below&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The equivalents to the above in JXA JavaScript (again, the &lt;code&gt;exportable&lt;/code&gt;
+variable is optional):&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;Application(&#39;com.runningwithcrayons.Alfred&#39;).setConfiguration(&#39;browser&#39;, {
+    toValue: &#39;Safari&#39;,
+    inWorkflow: &#39;net.deanishe.demo&#39;,
+    exportable: true
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Or using the &lt;code&gt;alfred_workflow_bundleid&lt;/code&gt; variable:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;ObjC.import(&#39;stdlib&#39;);
+Application(&#39;com.runningwithcrayons.Alfred&#39;).setConfiguration(&#39;browser&#39;, {
+    toValue: &#39;Safari&#39;,
+    inWorkflow: $.getenv(&#39;alfred_workflow_bundleid&#39;),
+    exportable: true
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And to remove a variable:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;Application(&#39;com.runningwithcrayons.Alfred&#39;).removeConfiguration(&#39;browser&#39;, {
+  inWorkflow: $.getenv(&#39;alfred_workflow_bundleid&#39;)
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a id=&#34;alfred-3&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;alfred-3&#34;&gt;Alfred 3&lt;/h3&gt;
+&lt;p&gt;If you&#39;re still using Alfred 3, call the application by name, not bundle ID.&lt;/p&gt;
+&lt;p&gt;AppleScript:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-applescript&#34;&gt;tell application &amp;quot;Alfred 3&amp;quot; to ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;JXA:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;Application(&#39;Alfred 3&#39;)...
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+  </channel>
+</rss>

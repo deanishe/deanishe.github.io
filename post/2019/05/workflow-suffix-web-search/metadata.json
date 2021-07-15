@@ -1,0 +1,13 @@
+{
+  "alfredworkflow" : {
+    "category" : "Productivity",
+    "readme" : "Run your Web Searches via suffix keywords.",
+    "createdby" : "Dean Jackson <deanishe@deanishe.net>",
+    "downloadurl" : "https:\/\/www.deanishe.net\/post\/2019\/05\/workflow-suffix-web-search\/Suffix%20Web%20Search.alfredworkflow",
+    "version" : "0.5.1",
+    "bundleid" : "net.deanishe.alfred.suffix-search",
+    "description" : "Run Alfred web searches via suffix keywords",
+    "name" : "Suffix Web Search",
+    "webaddress" : "https:\/\/www.deanishe.net\/post\/2019\/05\/workflow-suffix-web-search\/"
+  }
+}

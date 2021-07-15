@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>demo on deanishe.net</title>
+    <link>https://www.deanishe.net/tags/demo/</link>
+    <description>Recent content in demo on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/tags/demo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Demo workflow: Random Images</title>
+      <link>https://www.deanishe.net/post/2020/06/demo-workflow-random-images/</link>
+      <pubDate>Sat, 13 Jun 2020 10:21:33 +0200</pubDate>
+      <guid>https://www.deanishe.net/post/2020/06/demo-workflow-random-images/</guid>
+      <description>&lt;p&gt;Simple workflow that opens a given number of random images at a given interval.&lt;/p&gt;
+&lt;h2 id=&#34;usage&#34;&gt;Usage&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;randimg &amp;lt;interval&amp;gt; &amp;lt;count&amp;gt;&lt;/code&gt; — Show &lt;code&gt;&amp;lt;count&amp;gt;&lt;/code&gt; images at intervals of &lt;code&gt;&amp;lt;interval&amp;gt;&lt;/code&gt; seconds.&lt;/p&gt;
+&lt;h2 id=&#34;configuration&#34;&gt;Configuration&lt;/h2&gt;
+&lt;p&gt;The workflow can be configured via its configuration sheet.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Variable&lt;/th&gt;
+&lt;th&gt;Default&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;APP_NAME&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;Preview&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Application to open images in&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;IMAGE_DIR&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;~/Pictures&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Directory to read images from&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;PLAY_SOUND&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;true&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Play a sound halfway through and at end&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;If Preview is the chosen application, the images are opened in fullscreen mode.&lt;/p&gt;
+&lt;p&gt;From &lt;a href=&#34;https://www.alfredforum.com/topic/15077-get-random-image-from-folder-for-x-seconds/&#34;&gt;this forum thread&lt;/a&gt;.&lt;/p&gt;</description>
+    </item><item>
+      <title>Demo workflow: Search engine List Filter</title>
+      <link>https://www.deanishe.net/post/2019/07/demo-workflow-search-engine-list-filter/</link>
+      <pubDate>Fri, 26 Jul 2019 21:00:00 +0200</pubDate>
+      <guid>https://www.deanishe.net/post/2019/07/demo-workflow-search-engine-list-filter/</guid>
+      <description>&lt;p&gt;Alfred workflow that allows you to choose from a list
+of search engines, then enter the query to search for.&lt;/p&gt;
+&lt;p&gt;It demonstrates the use of the &lt;a href=&#34;https://www.alfredapp.com/help/workflows/utilities/argument/&#34;&gt;Args &amp;amp; Vars utility&lt;/a&gt;
+to capture more than one input from the user (by saving the first
+to a workflow variable), and the &lt;a href=&#34;https://www.alfredapp.com/help/workflows/utilities/json/&#34;&gt;JSON utility&lt;/a&gt; to
+dynamically configure an Open URL action to use the selected URL.&lt;/p&gt;
+&lt;p&gt;The latter means that Alfred still takes care of URL-encoding the
+search query for you.&lt;/p&gt;
+&lt;p&gt;Based on &lt;a href=&#34;https://www.alfredforum.com/topic/13380-how-to-use-web-searches-in-a-list-filter/&#34;&gt;this forum thread&lt;/a&gt;.&lt;/p&gt;</description>
+    </item><item>
+      <title>Demo workflow: Directory size</title>
+      <link>https://www.deanishe.net/post/2019/07/demo-workflow-directory-size/</link>
+      <pubDate>Thu, 18 Jul 2019 00:00:00 +0000</pubDate>
+      <guid>https://www.deanishe.net/post/2019/07/demo-workflow-directory-size/</guid>
+      <description>&lt;p&gt;Alfred workflow that shows the size of a directory.&lt;/p&gt;
+&lt;p&gt;A specific directory can be specified in the workflow&#39;s
+configuration sheet. Use keyword &lt;code&gt;dirsize&lt;/code&gt; to show the
+size of this directory.&lt;/p&gt;
+&lt;p&gt;There is also a &amp;ldquo;Show Size&amp;rdquo; File Action, which shows
+the size of any directory.&lt;/p&gt;
+&lt;p&gt;As the size of a directory is calculated on-the-fly, the
+workflow can be slow on large directory trees.&lt;/p&gt;
+&lt;p&gt;Under the hood, it uses &lt;code&gt;du -h -d 0&lt;/code&gt;.&lt;/p&gt;</description>
+    </item><item>
+      <title>Workflow: Search in App</title>
+      <link>https://www.deanishe.net/post/2019/06/workflow-search-in-app/</link>
+      <pubDate>Sun, 09 Jun 2019 00:00:00 +0000</pubDate>
+      <guid>https://www.deanishe.net/post/2019/06/workflow-search-in-app/</guid>
+      <description>&lt;p&gt;Alfred workflow to pass a query to an application&#39;s own search by simulating &lt;kbd&gt;⌘F&lt;/kbd&gt;.&lt;/p&gt;
+&lt;p&gt;For applications that aren&#39;t scriptable via AppleScript or URL scheme, you can simulate keypresses to open an app&#39;s own search function and enter a query. This workflow is a relatively flexible implementation of that.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;#downloads&#34;&gt;Download here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;By default, the workflow puts your query on macOS&#39;s &lt;a href=&#34;#find-pasteboard&#34;&gt;Find Pasteboard&lt;/a&gt;, activates the target application, waits for it to be visible, and then simulates &lt;kbd&gt;⌘F&lt;/kbd&gt;.&lt;/p&gt;
+&lt;p&gt;If the application doesn&#39;t support the Find Pasteboard, set &lt;code&gt;use_find_pasteboard&lt;/code&gt; to &lt;code&gt;0&lt;/code&gt; (see &lt;a href=&#34;#configuration&#34;&gt;below&lt;/a&gt;) and the workflow attempts to type the query into the search field instead.&lt;/p&gt;
+&lt;p&gt;Finally, it simulates &lt;kbd&gt;↩&lt;/kbd&gt; (by default) to start the search.&lt;/p&gt;
+&lt;h2 id=&#34;configuration&#34;&gt;Configuration&lt;/h2&gt;
+&lt;p&gt;Configure the workflow via its configuration sheet in Alfred Preferences:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;screenshot-setup.png&#34; alt=&#34;Workflow configuration sheet&#34; title=&#34;screenshot of Alfred&#39;s workflow configuration sheet&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;options&#34;&gt;Options&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;app_name&lt;/code&gt; is the name of the application you want to search in.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;delay&lt;/code&gt; is how long (in seconds) the workflow waits for the app&#39;s search dialog to activate after sending &lt;kbd&gt;⌘F&lt;/kbd&gt; before it attempts to type the query or send &lt;kbd&gt;↩&lt;/kbd&gt;.&lt;/p&gt;
+&lt;p&gt;If &lt;code&gt;press_return&lt;/code&gt; is set to &lt;code&gt;1&lt;/code&gt;, the workflow simulates &lt;kbd&gt;↩&lt;/kbd&gt; to start the search.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;timeout&lt;/code&gt; is how long (in seconds) the workflow waits for the application to become visible.&lt;/p&gt;
+&lt;p&gt;If &lt;code&gt;use_find_pasteboard&lt;/code&gt; is &lt;code&gt;1&lt;/code&gt;, the workflow puts the search query on macOS&#39;s &lt;a href=&#34;#find-pasteboard&#34;&gt;Find pasteboard&lt;/a&gt;. Otherwise, the workflow attempts to type the search query in the application&#39;s search field.&lt;/p&gt;
+&lt;p&gt;If &lt;code&gt;wait_visible&lt;/code&gt; is set to &lt;code&gt;1&lt;/code&gt;, the workflow waits until the application is visible before simulating any keypresses.&lt;/p&gt;
+&lt;h2 id=&#34;find-pasteboard&#34;&gt;Find Pasteboard&lt;/h2&gt;
+&lt;p&gt;macOS has multiple pasteboards (clipboards), and one of these is called the Find Pasteboard (or Search Pasteboard). In applications that use macOS&#39;s native search, the Find Pasteboard is automatically used for the search query (including live updates). You can put the currently selected text on the Find Pasteboard with &lt;kbd&gt;⌘E&lt;/kbd&gt;.&lt;/p&gt;
+&lt;p&gt;In Alfred 4+, the &lt;a href=&#34;https://www.alfredapp.com/help/workflows/triggers/hotkey/&#34; title=&#34;Alfred&#39;s help for Hotkey triggers&#34;&gt;Hotkey trigger&lt;/a&gt; can also pass the contents of the Find Pasteboard to your workflow.&lt;/p&gt;</description>
+    </item><item>
+      <title>Demo workflow: Mods and filters</title>
+      <link>https://www.deanishe.net/post/2018/12/demo-workflow-mods-and-filters/</link>
+      <pubDate>Thu, 27 Dec 2018 00:00:00 +0000</pubDate>
+      <guid>https://www.deanishe.net/post/2018/12/demo-workflow-mods-and-filters/</guid>
+      <description>&lt;p&gt;Do-nothing workflow that shows how to use modifiers and filters in an Alfred Workflow.&lt;/p&gt;
+&lt;p&gt;Note that the workflow uses an outdated (but working) feedback format. It&#39;s no longer necessary to serialise a &lt;code&gt;alfredworkflow&lt;/code&gt; object into &lt;code&gt;arg&lt;/code&gt;: &lt;code&gt;mod&lt;/code&gt; is now a much richer object, with support for &lt;code&gt;variables&lt;/code&gt; and &lt;code&gt;args&lt;/code&gt; fields.&lt;/p&gt;
+&lt;p&gt;From &lt;a href=&#34;https://www.alfredforum.com/topic/9037-junction-with-modifiers/&#34;&gt;this forum thread&lt;/a&gt;.&lt;/p&gt;</description>
+    </item><item>
+      <title>Demo workflow: Validate email address</title>
+      <link>https://www.deanishe.net/post/2018/12/demo-workflow-validate-email-address/</link>
+      <pubDate>Thu, 27 Dec 2018 00:00:00 +0000</pubDate>
+      <guid>https://www.deanishe.net/post/2018/12/demo-workflow-validate-email-address/</guid>
+      <description>&lt;p&gt;Alfred workflow that demonstrates how to validate user input.&lt;/p&gt;
+&lt;p&gt;The workflow contains a Script Filter that accepts an email address. If
+the input isn&#39;t valid, it shows an &amp;ldquo;invalid email address&amp;rdquo; message and
+refuses to continue.&lt;/p&gt;</description>
+    </item><item>
+      <title>Demo workflow: Split query into two words</title>
+      <link>https://www.deanishe.net/post/2018/02/demo-workflow-split-query-into-two-words/</link>
+      <pubDate>Sat, 03 Feb 2018 00:00:00 +0000</pubDate>
+      <guid>https://www.deanishe.net/post/2018/02/demo-workflow-split-query-into-two-words/</guid>
+      <description>&lt;p&gt;A stub Alfred workflow that splits user query into two words using
+AppleScript.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

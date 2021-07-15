@@ -1,0 +1,13 @@
+{
+  "alfredworkflow" : {
+    "category" : "Work",
+    "readme" : "Word to PDF\n===========\n\nConvert Word documents to PDF using Word.\n\nBy default, the workflow uses Word and macOS's built-in \"Save as PDF\" functionality. This is relatively clunky and slow, but doesn't require any additional software or services.\n\nAlternatively, it can use Word's native PDF export, which is based on a Microsoft-provided online service. This, of course, has serious privacy implications.\n\nTo use the online service, set variable \"USE_ONLINE_SERVICE\" to \"true\".\n\nSet variable \"OPEN_WITH\" to the name of the application you'd like the exported PDFs to be opened in.",
+    "createdby" : "Dean Jackson <deanishe@deanishe.net>",
+    "downloadurl" : "https:\/\/www.deanishe.net\/post\/2021\/05\/workflow-word-to-pdf\/Word%20to%20PDF.alfredworkflow",
+    "version" : "0.1.0",
+    "bundleid" : "net.deanishe.alfred.word-to-pdf",
+    "description" : "Export Word docs to PDF",
+    "name" : "Word to PDF",
+    "webaddress" : "https:\/\/www.deanishe.net\/post\/2021\/05\/workflow-word-to-pdf\/"
+  }
+}

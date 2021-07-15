@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>launchd on deanishe.net</title>
+    <link>https://www.deanishe.net/tags/launchd/</link>
+    <description>Recent content in launchd on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/tags/launchd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Auto-swap day/night Alfred themes</title>
+      <link>https://www.deanishe.net/snippet/auto-swap-alfred-theme/</link>
+      <pubDate>Sun, 25 Dec 2016 16:32:05 +0100</pubDate>
+      <guid>https://www.deanishe.net/snippet/auto-swap-alfred-theme/</guid>
+      <description>&lt;p&gt;Swap Alfred theme at sunrise and sunset. Goes well with &lt;a href=&#34;https://justgetflux.com&#34;&gt;f.lux&lt;/a&gt;
+and macOS&#39;s night mode.&lt;/p&gt;
+&lt;p&gt;It uses &lt;a href=&#34;http://www.launchd.info&#34;&gt;launchd&lt;/a&gt; to call itself at sunrise and sunset (or
+as soon thereafter as your machine boots/wakes), and tells
+&lt;a href=&#34;https://www.alfredapp.com/&#34;&gt;Alfred&lt;/a&gt; to change its theme.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-none&#34;&gt;toggle_alfred_theme.py [-v|-q] [-d|--dark &amp;lt;theme&amp;gt;] [-l|--light &amp;lt;theme&amp;gt;]
+
+    **You must first edit this script (or the accompanying bash wrapper)
+    to set your location!**
+
+    These scripts (Python script and bash wrapper) live at:
+    https://gist.github.com/deanishe/ce442c3a768adedc9c39
+
+    Change Alfred&#39;s theme depending on whether it&#39;s dark outside. Theme
+    is changed immediately when the script is run and the script will
+    also call itself again at sunrise and sunset (via launchd) to change
+    Alfred&#39;s theme. It&#39;s works well together with F.lux, which can
+    switch to Yosemite&#39;s dark mode at sunset.
+
+    Just run the script *once* with your preferred themes:
+
+        python toggle_alfred_theme.py --dark &#39;Dark Theme&#39; --light &#39;Light Theme&#39;
+
+    or if you&#39;re using the wrapper:
+
+        toggle-alfred-theme.bash --dark &#39;Dark Theme&#39; --light &#39;Light Theme&#39;
+
+    and it will ensure Alfred&#39;s theme is changed every day at sunrise
+    and sunset.
+
+    To change your preferred themes, just run the script again.
+
+    Note: Because the script calls itself via launchd, if you move the
+    script, it will stop working until you run it again.
+
+Usage:
+
+    toggle_alfred_theme.py (-h|--help)
+    toggle_alfred_theme.py --timezones
+    toggle_alfred_theme.py (-t|--times)
+    toggle_alfred_theme.py [-n] [-v|-q] [--dark &amp;lt;theme&amp;gt;] [--light &amp;lt;theme&amp;gt;]
+
+Options:
+    -h, --help           Show this help message
+    -n, --nothing        Show what would be set, but make no changes
+    -t, --times          Show sunrise and sunset times for next 7 days
+    --timezones          Show a list of (&amp;gt;500) supported timezones
+    -l, --light &amp;lt;theme&amp;gt;  Alfred theme to use after sunrise
+    -d, --dark &amp;lt;theme&amp;gt;   Alfred theme to use after sunset
+    -v, --verbose        Show debugging info
+    -q, --quiet          Only show warnings and errors
+
+Installation &amp;amp; Setup:
+
+    This script requires the `astral` and `pytz` libraries. Install with:
+
+        pip install astral
+
+    It&#39;s better to install them in the same directory as this script (or
+    use a virtualenv), in order not to muck up your Python installation
+    or break other software:
+
+        pip install --target=/directory/where/this/script/is astral
+
+    Adjust the settings at the top of this script in the CONFIG section
+    (or in the bash wrapper) to match your location.
+
+    `TZ_NAME` must be one of the timezones recognised by `pytz`. To see
+    a list of all supported timezones, run this script with the
+    --timezones option. (Note there are over 500 timezones.)
+
+    You can usually find your town&#39;s latitude, longitude and elevation
+    on its Wikipedia page.
+
+How it works:
+
+    When run, the script will immediately set Alfred&#39;s theme according
+    to whether it&#39;s light or dark out, then tell OS X to run the script
+    again at the next sunset/sunrise. Even if your computer is off/asleep
+    when the script is supposed to run, it will be run immediately on
+    boot/wake.
+
+    Note: Yosemite has some issues with running LaunchAgents on wake. If
+    the script isn&#39;t running when it&#39;s supposed to on Yosemite, but the
+    script reports the correct times, it&#39;s a problem with Yosemite, not
+    this script.
+
+    The script has to fork into the background (i.e. exit successfully
+    immediately) because `launchctl` doesn&#39;t like the script updating
+    the Launch Agent while it&#39;s running it.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There are two files, the Python script and a bash wrapper. The wrapper&#39;s
+only purpose is to store your configuration, so you can upgrade the
+Python script without having to edit it again.&lt;/p&gt;
+&lt;p&gt;You &lt;strong&gt;must&lt;/strong&gt; set your location in one of the scripts before usage.&lt;/p&gt;
+&lt;p&gt;You can usually find the latitude, longitude and elevation of your town
+on its Wikipedia page.&lt;/p&gt;
+&lt;script type=&#34;application/javascript&#34; src=&#34;https://gist.github.com/deanishe/ce442c3a768adedc9c39.js&#34;&gt;&lt;/script&gt;</description>
+    </item>
+  </channel>
+</rss>

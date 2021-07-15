@@ -1,0 +1,13 @@
+{
+  "alfredworkflow" : {
+    "category" : "",
+    "readme" : "Simple workflow that opens a given number of random images at a given interval.\n\nUsage\n-----\n\n`randimg <interval> <count>` — Show `<count>` images at intervals of `<interval>` seconds.\n\n\nConfiguration\n-------------\n\nThe workflow can be configured via its configuration sheet.\n\n|   Variable   |   Default    |               Description               |\n|--------------|--------------|-----------------------------------------|\n| `APP_NAME`   | `Preview`    | Application to open images in           |\n| `IMAGE_DIR`  | `~\/Pictures` | Directory to read images from           |\n| `PLAY_SOUND` | `true`       | Play a sound halfway through and at end |\n\nIf Preview is the chosen application, the images are opened in fullscreen mode.",
+    "createdby" : "Dean Jackson <deanishe@deanishe.net>",
+    "downloadurl" : "https:\/\/www.deanishe.net\/post\/2020\/06\/demo-workflow-random-images\/Random%20Images.alfredworkflow",
+    "version" : "0.1.1",
+    "bundleid" : "net.deanishe.alfred.demo.random-images",
+    "description" : "Show random images in Preview",
+    "name" : "Random Images",
+    "webaddress" : "https:\/\/www.deanishe.net\/post\/2020\/06\/demo-workflow-random-images\/"
+  }
+}

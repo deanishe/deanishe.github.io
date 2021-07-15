@@ -1,0 +1,13 @@
+{
+  "alfredworkflow" : {
+    "category" : "Internet",
+    "readme" : "Firefox Bookmarks\n=================\n\nSearch and open Firefox bookmarks with Alfred 4.\n\n\nConfiguration\n-------------\n\nBy default, the workflow reads the bookmarks.html for the default Firefox profile. If you wish to read a different profile's bookmarks, set `profile_name` to the appropriate name, e.g. \"dev-edition-default\".",
+    "createdby" : "Dean Jackson <deanishe@deanishe.net>",
+    "downloadurl" : "https://www.deanishe.net/post/2019/06/workflow-firefox-bookmarks/Firefox%20Bookmarks-0.1.1.alfredworkflow",
+    "version" : "0.1.1",
+    "bundleid" : "net.deanishe.alfred.firefox-bookmarks",
+    "description" : "Filter Firefox Bookmarks",
+    "name" : "Firefox Bookmarks",
+    "webaddress" : "https:\/\/www.deanishe.net\/post\/2019\/06\/workflow-firefox-bookmarks\/"
+  }
+}

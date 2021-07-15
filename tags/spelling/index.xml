@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>spelling on deanishe.net</title>
+    <link>https://www.deanishe.net/tags/spelling/</link>
+    <description>Recent content in spelling on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/tags/spelling/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Common Misspellings Snippets for Alfred</title>
+      <link>https://www.deanishe.net/post/2021/04/common-misspellings-snippets-for-alfred/</link>
+      <pubDate>Sat, 24 Apr 2021 22:06:01 +0200</pubDate>
+      <guid>https://www.deanishe.net/post/2021/04/common-misspellings-snippets-for-alfred/</guid>
+      <description>&lt;p&gt;Snippet collection for Alfred based on &lt;a href=&#34;https://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings&#34;&gt;Wikipedia&#39;s list of common misspellings&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This is a snippet collection for Alfred 4+ to &amp;ldquo;autocorrect&amp;rdquo; &lt;a href=&#34;https://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings&#34;&gt;Wikipedia&#39;s list of common misspellings&lt;/a&gt;. Inspired by &lt;a href=&#34;https://www.alfredforum.com/topic/16806-automatic-spelling-correction-flummoxed-by-spell-chekced-yall/&#34;&gt;this forum thread&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The Wikipedia list often contains multiple corrections for each misspelling. As a snippet can only contain one correction per misspelling, I&#39;ve had to remove all but one of the alternatives. Generally, I&#39;ve tried to pick the most common or obvious correction, and in the case of US and UK spellings, the British one.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Many keywords are prefixes of other keywords, so auto-expansion won&#39;t work with this snippet collection. Alternatively, you can disable the duplicates, which Alfred will mark red if you turn on auto-expansion.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

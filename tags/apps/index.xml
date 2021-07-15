@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>apps on deanishe.net</title>
+    <link>https://www.deanishe.net/tags/apps/</link>
+    <description>Recent content in apps on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/tags/apps/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Multiple app instances and scripting weirdness</title>
+      <link>https://www.deanishe.net/snippet/multiple-app-instances/</link>
+      <pubDate>Fri, 23 Jun 2017 10:12:40 +0200</pubDate>
+      <guid>https://www.deanishe.net/snippet/multiple-app-instances/</guid>
+      <description>&lt;p&gt;It&#39;s possible to start multiple instances of an application with &lt;code&gt;open -n&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;#!/bin/bash
+# First instance of application
+open -a &#39;Safari&#39; &#39;https://www.google.com&#39;
+# Open a second application process
+open -n -a &#39;Safari&#39; &#39;https://www.yahoo.com&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Any subsequent calls to &lt;code&gt;Safari&lt;/code&gt; via AppleScript will go to the newest instance of the application, but weirdly, JXA calls go to the first:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;#!/bin/bash
+open -a &#39;Safari&#39; &#39;https://www.google.com&#39;
+sleep 10  # give app and page time to load
+osascript -l JavaScript -e &amp;quot;Application(&#39;Safari&#39;).windows[0].currentTab.name()&amp;quot;
+# Google
+osascript -e &#39;tell application &amp;quot;Safari&amp;quot; to return the name of the current tab of the first window as text&#39;
+# Google
+
+# Open a new instance
+open -n -a &#39;Safari&#39; &#39;https://www.yahoo.com&#39;
+sleep 10  # give app and page time to load
+osascript -l JavaScript -e &amp;quot;Application(&#39;Safari&#39;).windows[0].currentTab.name()&amp;quot;
+# Google
+osascript -e &#39;tell application &amp;quot;Safari&amp;quot; to return the name of the current tab of the first window as text&#39;
+# Yahoo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To talk to a specific instance, sort them by PID. The lowest PID is the oldest instance, the highest the newest:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// Compare PIDs
+function sortByPid(proc1, proc2) {
+    var pid1 = proc1.unixId()
+    var pid2 = proc2.unixId()
+    if (pid1 &amp;lt; pid2) return -1
+    if (pid2 &amp;lt; pid1) return 1
+    return 0
+}
+
+// Return array of processes, sorted by PID
+function namedProcesses(name) {
+    var results = []
+    var procs = Application(&#39;System Events&#39;).processes.whose({name: name})
+    for (i=0; i&amp;lt;procs.length;i++) {
+        results.push(procs[i])
+    }
+    results.sort(sortByPid)
+    return results
+}
+
+function run() {
+    var procs = namedProcesses(&#39;Safari&#39;)
+    var oldest = procs[0]
+    var newest = procs[procs.length-1]
+    console.log(&#39;oldest proc (&#39; + newest.unixId() + &#39;)&#39;, oldest)
+    console.log(&#39;newest proc (&#39; + oldest.unixId() + &#39;)&#39;, newest)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Unfortunately, I haven&#39;t yet figured out how to get a Safari &lt;code&gt;Application&lt;/code&gt; from the Safari &lt;code&gt;Process&lt;/code&gt; object returned by System Events.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

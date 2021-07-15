@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>macos on deanishe.net</title>
+    <link>https://www.deanishe.net/tags/macos/</link>
+    <description>Recent content in macos on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/tags/macos/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sync macOS Shortcuts to Alfred Snippets</title>
+      <link>https://www.deanishe.net/snippet/macos-shortcuts-to-alfred-snippets/</link>
+      <pubDate>Mon, 22 Jun 2020 12:04:12 +0200</pubDate>
+      <guid>https://www.deanishe.net/snippet/macos-shortcuts-to-alfred-snippets/</guid>
+      <description>&lt;p&gt;Python script to sync macOS/iOS system shortcuts to an &lt;a href=&#34;https://www.alfredapp.com&#34;&gt;Alfred&lt;/a&gt; snippet collection.&lt;/p&gt;
+&lt;p&gt;The script syncs your macOS shortcuts as defined in &amp;ldquo;System Preferences &amp;gt; Keyboard &amp;gt; Text&amp;rdquo; to an Alfred snippets collection.&lt;/p&gt;
+&lt;p&gt;As the script syncs macOS snippets to Alfred, &lt;strong&gt;it will remove all other snippets&lt;/strong&gt;, so don&#39;t put anything else in that collection.&lt;/p&gt;
+&lt;h2 id=&#34;why&#34;&gt;Why?&lt;/h2&gt;
+&lt;p&gt;To have your iOS snippets work properly on your Mac. macOS snippets don&#39;t work everywhere and aren&#39;t as simple to use as Alfred ones.&lt;/p&gt;
+&lt;h2 id=&#34;usage&#34;&gt;Usage&lt;/h2&gt;
+&lt;p&gt;You can run the script from wherever, but unless you run it from your Alfred snippets directory, you&#39;ll at least need to set the &lt;code&gt;SNIPPETS_DIR&lt;/code&gt; environent variable (see below), so Alfred sees the snippets.&lt;/p&gt;
+&lt;h2 id=&#34;configuration&#34;&gt;Configuration&lt;/h2&gt;
+&lt;p&gt;The script has two options, set by environment variables:&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;&lt;code&gt;SNIPPET_DIR&lt;/code&gt; (default: &lt;code&gt;.&lt;/code&gt;)&lt;/dt&gt;
+&lt;dd&gt;Directory your Alfred snippets are in. In most cases, this should be the path to the &lt;code&gt;snippets&lt;/code&gt; subdirectory of your &lt;code&gt;Alfred.alfredpreferences&lt;/code&gt; bundle. The default location (i.e. you aren&#39;t syncing your Alfred preferences) would be &lt;code&gt;~/Library/Application Support/Alfred/Alfred.alfredpreferences/snippets&lt;/code&gt;.&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;COLLECTION_NAME&lt;/code&gt; (default: &lt;code&gt;macOS&lt;/code&gt;)&lt;/dt&gt;
+&lt;dd&gt;Name of Alfred snippet collection to sync macOS shortcuts to&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;The script will create Alfred snippets in directory &lt;code&gt;$SNIPPET_DIR/$COLLECTION_NAME&lt;/code&gt;.&lt;/p&gt;
+
+
+  
+  
+&lt;div class=&#34;code&#34;&gt;
+  &lt;header&gt;
+    &lt;div class=&#34;filename&#34;&gt;shortcuts2alfred.py&lt;/div&gt;
+    &lt;a class=&#34;rawlink&#34; href=&#34;shortcuts2alfred.py&#34;&gt;view raw&lt;/a&gt;
+  &lt;/header&gt;
+  &lt;pre&gt;&lt;code class=&#34;python&#34;&gt;#!/usr/bin/python
+# encoding: utf-8
+#
+# Copyright (c) 2020 Dean Jackson &amp;lt;deanishe@deanishe.net&amp;gt;
+# MIT Licence. See http://opensource.org/licenses/MIT
+#
+# Created on 2020-06-22
+#
+
+&amp;#34;&amp;#34;&amp;#34;Convert macOS text shortcuts to Alfred snippets.&amp;#34;&amp;#34;&amp;#34;
+
+from __future__ import print_function, absolute_import
+
+from collections import namedtuple
+import csv
+import json
+import os
+from os.path import expanduser, join, realpath
+from subprocess import check_output
+import sys
+
+
+# directory to save snippets to
+SNIPPET_DIR = os.getenv(&amp;#39;SNIPPET_DIR&amp;#39;) or &amp;#39;.&amp;#39;
+COLLECTION_NAME = os.getenv(&amp;#39;COLLECTION_NAME&amp;#39;) or &amp;#39;macOS&amp;#39;
+
+
+DBPATH = expanduser(&amp;#39;~/Library/KeyboardServices/TextReplacements.db&amp;#39;)
+QUERY = &amp;#34;&amp;#34;&amp;#34;
+select ZUNIQUENAME, ZSHORTCUT, ZPHRASE
+    from ZTEXTREPLACEMENTENTRY
+    where ZWASDELETED = 0;
+&amp;#34;&amp;#34;&amp;#34;
+
+
+Shortcut = namedtuple(&amp;#39;Shortcut&amp;#39;, &amp;#39;uid keyword snippet&amp;#39;)
+
+
+def log(s, *args, **kwargs):
+    &amp;#34;&amp;#34;&amp;#34;Log to STDERR.&amp;#34;&amp;#34;&amp;#34;
+    if args:
+        s = s % args
+    elif kwargs:
+        s = s % kwargs
+
+    print(s, file=sys.stderr)
+
+
+def load_shortcuts():
+    &amp;#34;&amp;#34;&amp;#34;Read shortcuts from system SQLite database.&amp;#34;&amp;#34;&amp;#34;
+    output = check_output([&amp;#39;/usr/bin/sqlite3&amp;#39;, &amp;#39;-csv&amp;#39;, DBPATH, QUERY])
+    reader = csv.reader(output.split(&amp;#39;\n&amp;#39;), delimiter=&amp;#39;,&amp;#39;, quotechar=&amp;#39;&amp;#34;&amp;#39;)
+    shortcuts = []
+    for row in reader:
+        if len(row) == 3:
+            sc = Shortcut(*[s.decode(&amp;#39;utf-8&amp;#39;) for s in row])
+            if sc.keyword == sc.snippet:  # ignore do-nothing shortcuts
+                continue
+            shortcuts.append(sc)
+
+    return shortcuts
+
+
+def shortcut_to_snippet(shortcut):
+    &amp;#34;&amp;#34;&amp;#34;Create Alfred snippet dict from macOS shortcut.&amp;#34;&amp;#34;&amp;#34;
+    return {
+        &amp;#39;alfredsnippet&amp;#39;: {
+            &amp;#39;snippet&amp;#39;: shortcut.snippet,
+            &amp;#39;uid&amp;#39;: shortcut.uid,
+            &amp;#39;name&amp;#39;: shortcut.keyword,
+            &amp;#39;keyword&amp;#39;: shortcut.keyword,
+        }
+    }
+
+
+def safename(s):
+    &amp;#34;&amp;#34;&amp;#34;Make filesystem-safe name.&amp;#34;&amp;#34;&amp;#34;
+    for c in (&amp;#39;/&amp;#39;, &amp;#39;:&amp;#39;):
+        s = s.replace(c, &amp;#39;-&amp;#39;)
+    return s
+
+
+def export_shortcuts(shortcuts, dirpath):
+    &amp;#34;&amp;#34;&amp;#34;Save macOS shortcuts to directory as Alfred snippets.&amp;#34;&amp;#34;&amp;#34;
+    log(&amp;#39;exporting snippets to %r ...&amp;#39;, dirpath)
+    if not os.path.exists(dirpath):
+        os.makedirs(dirpath, 0700)
+
+    # remove existing snippets
+    for name in os.listdir(dirpath):
+        if name.endswith(&amp;#39;.json&amp;#39;):
+            os.unlink(os.path.join(dirpath, name))
+
+    for i, sc in enumerate(shortcuts):
+        name = u&amp;#39;%s [%s].json&amp;#39; % (safename(sc.keyword), sc.uid)
+        path = join(dirpath, name.encode(&amp;#39;utf-8&amp;#39;))
+        log(&amp;#39;[%d/%d] saving snippet %r to %r ...&amp;#39;, i&amp;#43;1, len(shortcuts), sc.keyword, path)
+        with open(path, &amp;#39;wb&amp;#39;) as fp:
+            json.dump(shortcut_to_snippet(sc), fp, indent=2, separators=(&amp;#39;,&amp;#39;, &amp;#39;: &amp;#39;))
+
+
+def main():
+    &amp;#34;&amp;#34;&amp;#34;Run script.&amp;#34;&amp;#34;&amp;#34;
+    shortcuts = load_shortcuts()
+    log(&amp;#39;loaded %d macOS shortcut(s)&amp;#39;, len(shortcuts))
+    dirpath = realpath(expanduser(join(SNIPPET_DIR, COLLECTION_NAME)))
+    export_shortcuts(shortcuts, dirpath)
+
+
+if __name__ == &amp;#39;__main__&amp;#39;:
+    main()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Inspired by &lt;a href=&#34;https://www.alfredforum.com/topic/15130-syncing-icloud-text-shortcuts-to-snippets/&#34;&gt;this thread on the Alfred forums&lt;/a&gt;.&lt;/p&gt;</description>
+    </item><item>
+      <title>Set the hostname on macOS</title>
+      <link>https://www.deanishe.net/snippet/mac-hostname/</link>
+      <pubDate>Mon, 25 Mar 2019 00:00:00 +0000</pubDate>
+      <guid>https://www.deanishe.net/snippet/mac-hostname/</guid>
+      <description>&lt;p&gt;Use &lt;code&gt;scutil&lt;/code&gt; to set a Mac&#39;s FQDN.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo scutil --set HostName fqdn.example.com
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;other-commands&#34;&gt;Other commands&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;scutil --get HostName        # fqdn, same as hostname -f
+scutil --get LocalHostName   # same as hostname -s
+scutil --get ComputerName    # your computer&#39;s &amp;quot;friendly&amp;quot; name
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;more-info&#34;&gt;More info&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://ss64.com/osx/scutil.html&#34;&gt;manpage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/tldr-pages/tldr/blob/master/pages/osx/scutil&#34;&gt;tldr&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item><item>
+      <title>Multiple app instances and scripting weirdness</title>
+      <link>https://www.deanishe.net/snippet/multiple-app-instances/</link>
+      <pubDate>Fri, 23 Jun 2017 10:12:40 +0200</pubDate>
+      <guid>https://www.deanishe.net/snippet/multiple-app-instances/</guid>
+      <description>&lt;p&gt;It&#39;s possible to start multiple instances of an application with &lt;code&gt;open -n&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;#!/bin/bash
+# First instance of application
+open -a &#39;Safari&#39; &#39;https://www.google.com&#39;
+# Open a second application process
+open -n -a &#39;Safari&#39; &#39;https://www.yahoo.com&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Any subsequent calls to &lt;code&gt;Safari&lt;/code&gt; via AppleScript will go to the newest instance of the application, but weirdly, JXA calls go to the first:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;#!/bin/bash
+open -a &#39;Safari&#39; &#39;https://www.google.com&#39;
+sleep 10  # give app and page time to load
+osascript -l JavaScript -e &amp;quot;Application(&#39;Safari&#39;).windows[0].currentTab.name()&amp;quot;
+# Google
+osascript -e &#39;tell application &amp;quot;Safari&amp;quot; to return the name of the current tab of the first window as text&#39;
+# Google
+
+# Open a new instance
+open -n -a &#39;Safari&#39; &#39;https://www.yahoo.com&#39;
+sleep 10  # give app and page time to load
+osascript -l JavaScript -e &amp;quot;Application(&#39;Safari&#39;).windows[0].currentTab.name()&amp;quot;
+# Google
+osascript -e &#39;tell application &amp;quot;Safari&amp;quot; to return the name of the current tab of the first window as text&#39;
+# Yahoo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To talk to a specific instance, sort them by PID. The lowest PID is the oldest instance, the highest the newest:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// Compare PIDs
+function sortByPid(proc1, proc2) {
+    var pid1 = proc1.unixId()
+    var pid2 = proc2.unixId()
+    if (pid1 &amp;lt; pid2) return -1
+    if (pid2 &amp;lt; pid1) return 1
+    return 0
+}
+
+// Return array of processes, sorted by PID
+function namedProcesses(name) {
+    var results = []
+    var procs = Application(&#39;System Events&#39;).processes.whose({name: name})
+    for (i=0; i&amp;lt;procs.length;i++) {
+        results.push(procs[i])
+    }
+    results.sort(sortByPid)
+    return results
+}
+
+function run() {
+    var procs = namedProcesses(&#39;Safari&#39;)
+    var oldest = procs[0]
+    var newest = procs[procs.length-1]
+    console.log(&#39;oldest proc (&#39; + newest.unixId() + &#39;)&#39;, oldest)
+    console.log(&#39;newest proc (&#39; + oldest.unixId() + &#39;)&#39;, newest)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Unfortunately, I haven&#39;t yet figured out how to get a Safari &lt;code&gt;Application&lt;/code&gt; from the Safari &lt;code&gt;Process&lt;/code&gt; object returned by System Events.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

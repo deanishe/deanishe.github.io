@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>swift on deanishe.net</title>
+    <link>https://www.deanishe.net/tags/swift/</link>
+    <description>Recent content in swift on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/tags/swift/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Retrieve pasteboard contents by type on macOS</title>
+      <link>https://www.deanishe.net/snippet/swift-pasteboard/</link>
+      <pubDate>Sun, 16 Feb 2020 22:54:57 +0100</pubDate>
+      <guid>https://www.deanishe.net/snippet/swift-pasteboard/</guid>
+      <description>&lt;p&gt;Swift CLI helper to retrieve pasteboard content by type.&lt;/p&gt;
+&lt;p&gt;This script retrieves HTML and text content from the pasteboard, encodes it to JSON and writes the result to STDOUT.&lt;/p&gt;
+
+
+  
+  
+&lt;div class=&#34;code&#34;&gt;
+  &lt;header&gt;
+    &lt;div class=&#34;filename&#34;&gt;pboard.swift&lt;/div&gt;
+    &lt;a class=&#34;rawlink&#34; href=&#34;pboard.swift&#34;&gt;view raw&lt;/a&gt;
+  &lt;/header&gt;
+  &lt;pre&gt;&lt;code class=&#34;swift&#34;&gt;import Cocoa
+
+struct Pboard: Codable {
+	var html: String
+	var text: String
+}
+var pb = Pboard(html: &amp;#34;&amp;#34;, text: &amp;#34;&amp;#34;)
+
+// get contents of general pasteboard
+let typeHtml = NSPasteboard.PasteboardType.html
+let typeText = NSPasteboard.PasteboardType.string
+
+if let s = NSPasteboard.general.string(forType:typeHtml) {
+	pb.html = s
+}
+if let s = NSPasteboard.general.string(forType:typeText) {
+	pb.text = s
+}
+
+// encode to JSON and print
+let encoder = JSONEncoder()
+let data = try encoder.encode(pb)
+let string = String(data: data, encoding: .utf8)!
+print(string)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Run with:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;swift pboard.swift
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Build with:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;xcrun -sdk macosx swiftc pboard.swift -o pboard
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+  </channel>
+</rss>

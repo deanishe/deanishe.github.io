@@ -1,0 +1,13 @@
+{
+  "alfredworkflow" : {
+    "category" : "",
+    "readme" : "Show the size of a directory in Alfred 4+.\n\nKeyword \"dirsize\" shows the size of the folder specified there ->\n\nThere is also a File Action that can be used on any directory.",
+    "createdby" : "Dean Jackson <deanishe@deanishe.net>",
+    "downloadurl" : "https://www.deanishe.net/post/2019/07/demo-workflow-directory-size/Directory-Size.alfredworkflow",
+    "version" : "0.0.1",
+    "bundleid" : "net.deanishe.alfred.directory-size",
+    "description" : "Show the size of a specified directory",
+    "name" : "Directory Size",
+    "webaddress" : "https:\/\/www.deanishe.net\/post\/2019\/07\/demo-workflow-directory-size\/"
+  }
+}

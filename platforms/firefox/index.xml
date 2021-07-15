@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Firefox on deanishe.net</title>
+    <link>https://www.deanishe.net/platforms/firefox/</link>
+    <description>Recent content in Firefox on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/platforms/firefox/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Workflow: Firefox Bookmarks</title>
+      <link>https://www.deanishe.net/post/2019/06/workflow-firefox-bookmarks/</link>
+      <pubDate>Sat, 08 Jun 2019 00:00:00 +0000</pubDate>
+      <guid>https://www.deanishe.net/post/2019/06/workflow-firefox-bookmarks/</guid>
+      <description>&lt;p&gt;Alfred 4+ workflow to search and open Firefox bookmarks.&lt;/p&gt;
+&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
+&lt;p&gt;The workflow reads Firefox&#39;s bookmarks.html file, so first you must make sure that Firefox is configured to automatically export this file:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Browse to &lt;code&gt;about:config&lt;/code&gt; in Firefox&lt;/li&gt;
+&lt;li&gt;Set &lt;code&gt;browser.bookmarks.autoExportHTML&lt;/code&gt; to &lt;code&gt;true&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Restart Firefox to export the bookmarks.html file&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Firefox only updates the bookmarks.html file when it quits, so new bookmarks unfortunately aren&#39;t available in Alfred until you restart Firefox.&lt;/p&gt;
+&lt;h3 id=&#34;profiles&#34;&gt;Profiles&lt;/h3&gt;
+&lt;p&gt;By default, the workflow reads the bookmarks.html file for the default Firefox profile. If you wish to read a different profile&#39;s bookmarks, set &lt;code&gt;profile_name&lt;/code&gt; in the workflow&#39;s configuration sheet to the appropriate name, e.g. &lt;code&gt;dev-edition-default&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

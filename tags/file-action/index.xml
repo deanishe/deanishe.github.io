@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>file-action on deanishe.net</title>
+    <link>https://www.deanishe.net/tags/file-action/</link>
+    <description>Recent content in file-action on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/tags/file-action/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Workflow: New Directory With Selection</title>
+      <link>https://www.deanishe.net/post/2019/06/workflow-new-directory-with-selection/</link>
+      <pubDate>Mon, 03 Jun 2019 00:00:00 +0000</pubDate>
+      <guid>https://www.deanishe.net/post/2019/06/workflow-new-directory-with-selection/</guid>
+      <description>&lt;p&gt;Alfred 3+ workflow that implements a &amp;ldquo;New Dir With Selection&amp;rdquo; File Action.&lt;/p&gt;
+&lt;p&gt;The File Action moves the selected files to a new folder. It should work with most applications you can select (local) files with, but all files must be in the same folder.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

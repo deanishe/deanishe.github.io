@@ -1,0 +1,13 @@
+{
+  "alfredworkflow" : {
+    "category" : "",
+    "readme" : "Video Conferences\n=================\n\nThis workflow reads your Calendars database for upcoming events and shows those that contain URLs matching those of known video conference software links.\n\nIt supports Lync and Zoom out of the box. To add additional services, add a variable named `regex_*` (e.g. `regex_jitsi`) to the configuration with its value set to a Python regular expression that matches video-conference URLs for that service.\n\nTo limit the accounts and\/or calendars from which results are shown, add `account_*` or `calendar_*` variables set to the names of the accounts\/calendars you wish to restrict the search to.\n\nIf you don't have and `account_*` or `calendar_*` variables set, all accounts & calendars are searched.\n\n`lookahead_days` is the number of days for which the workflow will fetch events.\n\n`max_cache_seconds` is the number of seconds for which the workflow will cache a list of events retrieved from Calendar.app.\n\nIf the cache is out of date, you can force an update by entering the search query \"reload\" and actioning the \"Reload Events\" item.",
+    "createdby" : "Dean Jackson <deanishe@deanishe.net>",
+    "downloadurl" : "https:\/\/www.deanishe.net\/post\/2020\/05\/workflow-video-conferences\/Video%20Conferences.alfredworkflow",
+    "version" : "0.1.4",
+    "bundleid" : "net.deanishe.alfred.video-conferences",
+    "description" : "Show upcoming video conferences from your calendars",
+    "name" : "Video Conferences",
+    "webaddress" : "https:\/\/www.deanishe.net\/post\/2020\/05\/workflow-video-conferences\/"
+  }
+}

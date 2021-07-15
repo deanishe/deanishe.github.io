@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>export on deanishe.net</title>
+    <link>https://www.deanishe.net/tags/export/</link>
+    <description>Recent content in export on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/tags/export/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Workflow: Word to PDF</title>
+      <link>https://www.deanishe.net/post/2021/05/workflow-word-to-pdf/</link>
+      <pubDate>Wed, 05 May 2021 18:25:00 +0200</pubDate>
+      <guid>https://www.deanishe.net/post/2021/05/workflow-word-to-pdf/</guid>
+      <description>&lt;p&gt;An Alfred 4+ workflow to export Word documents to PDF. Uses Microsoft Word for the best possible conversion.&lt;/p&gt;
+&lt;p&gt;The workflow can be run via its &lt;strong&gt;Export as PDF&lt;/strong&gt; File Action or by searching for a Word document to convert with the keyword &lt;code&gt;word2pdf&lt;/code&gt;. It can either use macOS&#39;s built-in ability to generate PDFs via the Print dialog (the default) or Word&#39;s built-in PDF export, which is based on a web service provided by Microsoft.&lt;/p&gt;
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
+&lt;p&gt;Download &lt;a href=&#34;Word%20to%20PDF.alfredworkflow&#34;&gt;Word to PDF.alfredworkflow&lt;/a&gt; and double-click to install.&lt;/p&gt;
+&lt;h2 id=&#34;usage&#34;&gt;Usage&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;word2pdf &amp;lt;query&amp;gt;&lt;/code&gt; — Select a Word document to export.
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;↩&lt;/code&gt; — Export to selected document to PDF.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Export as PDF&lt;/code&gt; — &lt;a href=&#34;https://www.alfredapp.com/help/features/actions/&#34;&gt;File Action&lt;/a&gt; to export selected files.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;File Buffer&lt;/code&gt; — Don&#39;t forget you can collect files in &lt;a href=&#34;https://www.alfredapp.com/help/features/file-search/#file-buffer&#34;&gt;Alfred&#39;s File Buffer&lt;/a&gt; and send them to the File Action all at once.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;configuration&#34;&gt;Configuration&lt;/h2&gt;
+&lt;p&gt;The workflow has two configuration settings:&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;&lt;code&gt;OPEN_WITH&lt;/code&gt; (optional)&lt;/dt&gt;
+&lt;dd&gt;Set to the name of the application you&#39;d like to open the exported PDFs with. Default value is &lt;code&gt;Preview&lt;/code&gt;. Set to &lt;code&gt;Finder&lt;/code&gt; to reveal the PDFs in Finder. Clear the value to not open the PDFs.&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;USE_ONLINE_SERVICE&lt;/code&gt; (optional)&lt;/dt&gt;
+&lt;dd&gt;Set to &lt;code&gt;true&lt;/code&gt; to use Word&#39;s native PDF export (i.e. Microsoft&#39;s online service). This can be much faster and more reliable than UI scripting the Print dialog, but it has obvious privacy implications.&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;This workflow was built for &lt;a href=&#34;https://www.alfredforum.com/topic/16844-converting-a-word-document-to-pdf-and-opening-in-a-program/&#34;&gt;this thread on the Alfred forum&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

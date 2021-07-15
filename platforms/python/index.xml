@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on deanishe.net</title>
+    <link>https://www.deanishe.net/platforms/python/</link>
+    <description>Recent content in Python on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/platforms/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Text Table in Python</title>
+      <link>https://www.deanishe.net/snippet/py-text-table/</link>
+      <pubDate>Sun, 25 Dec 2016 16:33:06 +0100</pubDate>
+      <guid>https://www.deanishe.net/snippet/py-text-table/</guid>
+      <description>&lt;p&gt;Python class to pretty-print tabluar data in a terminal.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;t = Table(titles=[&#39;Name&#39;, &#39;Position&#39;, &#39;Goals&#39;])
+t.add_row([&#39;Dave Smith&#39;, &#39;striker&#39;, 12])
+t.add_row([&#39;Angus McGregor&#39;, &#39;full back&#39;, 1])
+print(t)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;produces:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;     Name      | Position  | Goals
+----------------------------------
+Dave Smith     | striker   |    12
+Angus McGregor | full back |     1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Titles are centre-aligned, text left-aligned, and numbers
+right-aligned.&lt;/p&gt;
+
+
+  
+  
+&lt;div class=&#34;code&#34;&gt;
+  &lt;header&gt;
+    &lt;div class=&#34;filename&#34;&gt;table.py&lt;/div&gt;
+    &lt;a class=&#34;rawlink&#34; href=&#34;table.py&#34;&gt;view raw&lt;/a&gt;
+  &lt;/header&gt;
+  &lt;pre&gt;&lt;code class=&#34;python&#34;&gt;#!/usr/bin/env python
+# encoding: utf-8
+#
+# Copyright (c) 2016 Dean Jackson &amp;lt;deanishe@deanishe.net&amp;gt;
+#
+# MIT Licence. See http://opensource.org/licenses/MIT
+#
+# Created on 2016-12-19
+#
+
+&amp;#34;&amp;#34;&amp;#34;Text table.
+
+Pretty-print tabular data in the terminal. Smart alignment of numbers.
+&amp;#34;&amp;#34;&amp;#34;
+
+from __future__ import print_function, absolute_import
+
+import re
+
+
+def unicodify(obj):
+    if isinstance(obj, unicode):
+        return obj
+    if isinstance(obj, str):
+        return obj.decode(&amp;#39;utf-8&amp;#39;)
+    return unicode(obj)
+
+
+class Table(object):
+
+    def __init__(self, titles=None):
+        self.centred_titles = True
+        self.rows = []
+        self._titlerows = []
+        self._size = 0
+        if titles:
+            self.add_row(titles, True)
+
+    def add_row(self, row, title=False):
+        self.rows.append(row)
+        if title:
+            self._titlerows.append(True)
+        else:
+            self._titlerows.append(False)
+
+    def __unicode__(self):
+        # Calculate column parameters
+        ncols = max([len(r) for r in self.rows])
+        widths = [0] * ncols  # width of each column
+        formats = [None] * ncols  # format string for each column
+        # calculate column widths
+        for r in self.rows:
+            for i, n in enumerate([len(unicodify(c)) for c in r]):
+                widths[i] = max([widths[i], n])
+
+        # Widget
+        hr = [(u&amp;#39;-&amp;#39; * w) for w in widths]
+        hr = u&amp;#39;---&amp;#39;.join(hr)
+
+        # Get row data formatted to length
+        lines = []
+        for y, r in enumerate(self.rows):
+            title = self._titlerows[y]
+            objs = list(r)
+            while len(objs) &amp;lt; ncols:  # Ensure row is long enough
+                objs.append(u&amp;#39;&amp;#39;)
+
+            # Format each cell
+            data = []
+            for i, o in enumerate(objs):
+                u = unicodify(o)
+                w = widths[i]
+
+                # Column formatting
+                # left-align by default
+                fmt = u&amp;#39;{{:{}s}}&amp;#39;.format(w)
+                if title and self.centred_titles:  # centre-align titles
+                    fmt = u&amp;#39;{{:^{}s}}&amp;#39;.format(w)
+
+                elif u.strip():  # Use or determine default for this column
+                    if formats[i]:
+                        fmt = formats[i]
+                    elif re.match(r&amp;#39;[$€£]?\s*[0-9,.% ]&amp;#43;&amp;#39;, u):  # number
+                            fmt = u&amp;#39;{{:&amp;gt;{}s}}&amp;#39;.format(w)
+                    # Save as default for this column
+                    formats[i] = fmt
+
+                u = fmt.format(u)
+                data.append(u)
+
+            # Combine cells into text for row
+            u = u&amp;#39; | &amp;#39;.join(data)
+            lines.append(u)
+            if title:
+                lines.append(hr)
+
+        return u&amp;#39;\n&amp;#39;.join([s.rstrip() for s in lines])
+
+    def __str__(self):
+        return self.__unicode__().encode(&amp;#39;utf-8&amp;#39;)
+
+
+if __name__ == &amp;#39;__main__&amp;#39;:
+    data = [
+        (&amp;#39;Dave Smith&amp;#39;, 22, &amp;#39;carpenter&amp;#39;),
+        (&amp;#39;Ronald McDonald&amp;#39;, 7, &amp;#39;schoolboy&amp;#39;),
+        (&amp;#39;Davy Jones&amp;#39;, 57, &amp;#39;boxer&amp;#39;),
+        (&amp;#39;Reggie Becker&amp;#39;, 83),
+        (&amp;#39;Ricky Bobby&amp;#39;, 28, &amp;#39;racing driver&amp;#39;, &amp;#39;fraud&amp;#39;),
+        (&amp;#39;Spanish Harlan&amp;#39;, 22, &amp;#39;DJ&amp;#39;, &amp;#39;100&amp;#39;, &amp;#39;$30&amp;#39;),
+        (&amp;#39;Fast Howie&amp;#39;, 42, &amp;#39;gunfighter&amp;#39;, &amp;#39;27 kills&amp;#39;, &amp;#39;dolla dolla&amp;#39;),
+    ]
+    if False:
+        t = Table(titles=[&amp;#39;Name&amp;#39;, &amp;#39;Current Age&amp;#39;, &amp;#39;Occupation&amp;#39;])
+        for row in data:
+            t.add_row(row)
+        print(t)
+        print(&amp;#39;========================&amp;#39;)
+
+    t2 = Table(titles=[&amp;#39;Name&amp;#39;, &amp;#39;Current Age&amp;#39;, &amp;#39;Occupation&amp;#39;])
+    for row in data:
+        t2.add_row(row)
+
+    # t2.centred_titles = False
+    print(t2)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</description>
+    </item>
+  </channel>
+</rss>

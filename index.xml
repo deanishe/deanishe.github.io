@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>dem Dean sein Zeug on deanishe.net</title>
+    <link>https://www.deanishe.net/</link>
+    <description>Recent content in dem Dean sein Zeug on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Posts</title>
+      <link>https://www.deanishe.net/post/</link>
+      <pubDate>Wed, 05 May 2021 18:25:00 +0200</pubDate>
+      <guid>https://www.deanishe.net/post/</guid>
+      <description></description>
+    </item><item>
+      <title>Links</title>
+      <link>https://www.deanishe.net/link/</link>
+      <pubDate>Sun, 25 Dec 2016 16:18:13 +0100</pubDate>
+      <guid>https://www.deanishe.net/link/</guid>
+      <description>&lt;p&gt;Stuff I&#39;ve recently saved to &lt;a href=&#34;https://pinboard.in&#34;&gt;Pinboard&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item><item>
+      <title>GitHub Activity</title>
+      <link>https://www.deanishe.net/activity/</link>
+      <pubDate>Sun, 25 Dec 2016 09:37:34 +0100</pubDate>
+      <guid>https://www.deanishe.net/activity/</guid>
+      <description>&lt;p&gt;What I&#39;ve been up to on &lt;a href=&#34;https://github.com&#34;&gt;GitHub&lt;/a&gt; recently.&lt;/p&gt;
+</description>
+    </item><item>
+      <title>Weather forecasts</title>
+      <link>https://www.deanishe.net/weather/</link>
+      <pubDate>Thu, 22 Dec 2016 23:34:36 +0100</pubDate>
+      <guid>https://www.deanishe.net/weather/</guid>
+      <description></description>
+    </item><item>
+      <title>Projects</title>
+      <link>https://www.deanishe.net/project/</link>
+      <pubDate>Thu, 22 Dec 2016 11:12:31 +0100</pubDate>
+      <guid>https://www.deanishe.net/project/</guid>
+      <description>&lt;p&gt;My most recently-updated &lt;a href=&#34;https://github.com/deanishe/&#34; target=&#34;_blank&#34;&gt;GitHub&lt;/a&gt; projects.&lt;/p&gt;
+</description>
+    </item><item>
+      <title>Scripts &amp; Snippets</title>
+      <link>https://www.deanishe.net/snippet/</link>
+      <pubDate>Thu, 22 Dec 2016 00:00:00 +0000</pubDate>
+      <guid>https://www.deanishe.net/snippet/</guid>
+      <description>&lt;p&gt;Short scripts and code snippets, mostly Python, zsh and Go.&lt;/p&gt;</description>
+    </item><item>
+      <title>About</title>
+      <link>https://www.deanishe.net/about/</link>
+      <pubDate>Tue, 20 Dec 2016 11:23:12 +0100</pubDate>
+      <guid>https://www.deanishe.net/about/</guid>
+      <description>&lt;p&gt;Stuff I like:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.alfredapp.com&#34;&gt;Alfred&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://golang.org&#34;&gt;Go&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.python.org&#34;&gt;Python&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com&#34;&gt;GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Stuff I used to make the site:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; static site generator&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/deanishe/alabastard&#34;&gt;Alabastard theme&lt;/a&gt; based on the
+&lt;a href=&#34;https://digitalcraftsman.github.io/hugo-alabaster-theme/&#34;&gt;Hugo Alabaster theme&lt;/a&gt; based on the
+&lt;a href=&#34;http://alabaster.readthedocs.io/en/latest/&#34;&gt;Sphinx Alabaster theme&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://fortawesome.github.io/Font-Awesome/&#34;&gt;Font Awesome&lt;/a&gt; for some icons, generated with
+&lt;a href=&#34;http://icons.deanishe.net&#34;&gt;IconServer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://erikflowers.github.io/weather-icons/&#34;&gt;Weather Icons&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://pages.github.com&#34;&gt;GitHub Pages&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+  </channel>
+</rss>

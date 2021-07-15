@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Scripts &amp; Snippets on deanishe.net</title>
+    <link>https://www.deanishe.net/snippet/</link>
+    <description>Recent content in Scripts &amp; Snippets on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/snippet/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sync macOS Shortcuts to Alfred Snippets</title>
+      <link>https://www.deanishe.net/snippet/macos-shortcuts-to-alfred-snippets/</link>
+      <pubDate>Mon, 22 Jun 2020 12:04:12 +0200</pubDate>
+      <guid>https://www.deanishe.net/snippet/macos-shortcuts-to-alfred-snippets/</guid>
+      <description>&lt;p&gt;Python script to sync macOS/iOS system shortcuts to an &lt;a href=&#34;https://www.alfredapp.com&#34;&gt;Alfred&lt;/a&gt; snippet collection.&lt;/p&gt;
+&lt;p&gt;The script syncs your macOS shortcuts as defined in &amp;ldquo;System Preferences &amp;gt; Keyboard &amp;gt; Text&amp;rdquo; to an Alfred snippets collection.&lt;/p&gt;
+&lt;p&gt;As the script syncs macOS snippets to Alfred, &lt;strong&gt;it will remove all other snippets&lt;/strong&gt;, so don&#39;t put anything else in that collection.&lt;/p&gt;
+&lt;h2 id=&#34;why&#34;&gt;Why?&lt;/h2&gt;
+&lt;p&gt;To have your iOS snippets work properly on your Mac. macOS snippets don&#39;t work everywhere and aren&#39;t as simple to use as Alfred ones.&lt;/p&gt;
+&lt;h2 id=&#34;usage&#34;&gt;Usage&lt;/h2&gt;
+&lt;p&gt;You can run the script from wherever, but unless you run it from your Alfred snippets directory, you&#39;ll at least need to set the &lt;code&gt;SNIPPETS_DIR&lt;/code&gt; environent variable (see below), so Alfred sees the snippets.&lt;/p&gt;
+&lt;h2 id=&#34;configuration&#34;&gt;Configuration&lt;/h2&gt;
+&lt;p&gt;The script has two options, set by environment variables:&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;&lt;code&gt;SNIPPET_DIR&lt;/code&gt; (default: &lt;code&gt;.&lt;/code&gt;)&lt;/dt&gt;
+&lt;dd&gt;Directory your Alfred snippets are in. In most cases, this should be the path to the &lt;code&gt;snippets&lt;/code&gt; subdirectory of your &lt;code&gt;Alfred.alfredpreferences&lt;/code&gt; bundle. The default location (i.e. you aren&#39;t syncing your Alfred preferences) would be &lt;code&gt;~/Library/Application Support/Alfred/Alfred.alfredpreferences/snippets&lt;/code&gt;.&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;COLLECTION_NAME&lt;/code&gt; (default: &lt;code&gt;macOS&lt;/code&gt;)&lt;/dt&gt;
+&lt;dd&gt;Name of Alfred snippet collection to sync macOS shortcuts to&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;The script will create Alfred snippets in directory &lt;code&gt;$SNIPPET_DIR/$COLLECTION_NAME&lt;/code&gt;.&lt;/p&gt;
+
+
+  
+  
+&lt;div class=&#34;code&#34;&gt;
+  &lt;header&gt;
+    &lt;div class=&#34;filename&#34;&gt;shortcuts2alfred.py&lt;/div&gt;
+    &lt;a class=&#34;rawlink&#34; href=&#34;shortcuts2alfred.py&#34;&gt;view raw&lt;/a&gt;
+  &lt;/header&gt;
+  &lt;pre&gt;&lt;code class=&#34;python&#34;&gt;#!/usr/bin/python
+# encoding: utf-8
+#
+# Copyright (c) 2020 Dean Jackson &amp;lt;deanishe@deanishe.net&amp;gt;
+# MIT Licence. See http://opensource.org/licenses/MIT
+#
+# Created on 2020-06-22
+#
+
+&amp;#34;&amp;#34;&amp;#34;Convert macOS text shortcuts to Alfred snippets.&amp;#34;&amp;#34;&amp;#34;
+
+from __future__ import print_function, absolute_import
+
+from collections import namedtuple
+import csv
+import json
+import os
+from os.path import expanduser, join, realpath
+from subprocess import check_output
+import sys
+
+
+# directory to save snippets to
+SNIPPET_DIR = os.getenv(&amp;#39;SNIPPET_DIR&amp;#39;) or &amp;#39;.&amp;#39;
+COLLECTION_NAME = os.getenv(&amp;#39;COLLECTION_NAME&amp;#39;) or &amp;#39;macOS&amp;#39;
+
+
+DBPATH = expanduser(&amp;#39;~/Library/KeyboardServices/TextReplacements.db&amp;#39;)
+QUERY = &amp;#34;&amp;#34;&amp;#34;
+select ZUNIQUENAME, ZSHORTCUT, ZPHRASE
+    from ZTEXTREPLACEMENTENTRY
+    where ZWASDELETED = 0;
+&amp;#34;&amp;#34;&amp;#34;
+
+
+Shortcut = namedtuple(&amp;#39;Shortcut&amp;#39;, &amp;#39;uid keyword snippet&amp;#39;)
+
+
+def log(s, *args, **kwargs):
+    &amp;#34;&amp;#34;&amp;#34;Log to STDERR.&amp;#34;&amp;#34;&amp;#34;
+    if args:
+        s = s % args
+    elif kwargs:
+        s = s % kwargs
+
+    print(s, file=sys.stderr)
+
+
+def load_shortcuts():
+    &amp;#34;&amp;#34;&amp;#34;Read shortcuts from system SQLite database.&amp;#34;&amp;#34;&amp;#34;
+    output = check_output([&amp;#39;/usr/bin/sqlite3&amp;#39;, &amp;#39;-csv&amp;#39;, DBPATH, QUERY])
+    reader = csv.reader(output.split(&amp;#39;\n&amp;#39;), delimiter=&amp;#39;,&amp;#39;, quotechar=&amp;#39;&amp;#34;&amp;#39;)
+    shortcuts = []
+    for row in reader:
+        if len(row) == 3:
+            sc = Shortcut(*[s.decode(&amp;#39;utf-8&amp;#39;) for s in row])
+            if sc.keyword == sc.snippet:  # ignore do-nothing shortcuts
+                continue
+            shortcuts.append(sc)
+
+    return shortcuts
+
+
+def shortcut_to_snippet(shortcut):
+    &amp;#34;&amp;#34;&amp;#34;Create Alfred snippet dict from macOS shortcut.&amp;#34;&amp;#34;&amp;#34;
+    return {
+        &amp;#39;alfredsnippet&amp;#39;: {
+            &amp;#39;snippet&amp;#39;: shortcut.snippet,
+            &amp;#39;uid&amp;#39;: shortcut.uid,
+            &amp;#39;name&amp;#39;: shortcut.keyword,
+            &amp;#39;keyword&amp;#39;: shortcut.keyword,
+        }
+    }
+
+
+def safename(s):
+    &amp;#34;&amp;#34;&amp;#34;Make filesystem-safe name.&amp;#34;&amp;#34;&amp;#34;
+    for c in (&amp;#39;/&amp;#39;, &amp;#39;:&amp;#39;):
+        s = s.replace(c, &amp;#39;-&amp;#39;)
+    return s
+
+
+def export_shortcuts(shortcuts, dirpath):
+    &amp;#34;&amp;#34;&amp;#34;Save macOS shortcuts to directory as Alfred snippets.&amp;#34;&amp;#34;&amp;#34;
+    log(&amp;#39;exporting snippets to %r ...&amp;#39;, dirpath)
+    if not os.path.exists(dirpath):
+        os.makedirs(dirpath, 0700)
+
+    # remove existing snippets
+    for name in os.listdir(dirpath):
+        if name.endswith(&amp;#39;.json&amp;#39;):
+            os.unlink(os.path.join(dirpath, name))
+
+    for i, sc in enumerate(shortcuts):
+        name = u&amp;#39;%s [%s].json&amp;#39; % (safename(sc.keyword), sc.uid)
+        path = join(dirpath, name.encode(&amp;#39;utf-8&amp;#39;))
+        log(&amp;#39;[%d/%d] saving snippet %r to %r ...&amp;#39;, i&amp;#43;1, len(shortcuts), sc.keyword, path)
+        with open(path, &amp;#39;wb&amp;#39;) as fp:
+            json.dump(shortcut_to_snippet(sc), fp, indent=2, separators=(&amp;#39;,&amp;#39;, &amp;#39;: &amp;#39;))
+
+
+def main():
+    &amp;#34;&amp;#34;&amp;#34;Run script.&amp;#34;&amp;#34;&amp;#34;
+    shortcuts = load_shortcuts()
+    log(&amp;#39;loaded %d macOS shortcut(s)&amp;#39;, len(shortcuts))
+    dirpath = realpath(expanduser(join(SNIPPET_DIR, COLLECTION_NAME)))
+    export_shortcuts(shortcuts, dirpath)
+
+
+if __name__ == &amp;#39;__main__&amp;#39;:
+    main()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Inspired by &lt;a href=&#34;https://www.alfredforum.com/topic/15130-syncing-icloud-text-shortcuts-to-snippets/&#34;&gt;this thread on the Alfred forums&lt;/a&gt;.&lt;/p&gt;</description>
+    </item><item>
+      <title>Retrieve pasteboard contents by type on macOS</title>
+      <link>https://www.deanishe.net/snippet/swift-pasteboard/</link>
+      <pubDate>Sun, 16 Feb 2020 22:54:57 +0100</pubDate>
+      <guid>https://www.deanishe.net/snippet/swift-pasteboard/</guid>
+      <description>&lt;p&gt;Swift CLI helper to retrieve pasteboard content by type.&lt;/p&gt;
+&lt;p&gt;This script retrieves HTML and text content from the pasteboard, encodes it to JSON and writes the result to STDOUT.&lt;/p&gt;
+
+
+  
+  
+&lt;div class=&#34;code&#34;&gt;
+  &lt;header&gt;
+    &lt;div class=&#34;filename&#34;&gt;pboard.swift&lt;/div&gt;
+    &lt;a class=&#34;rawlink&#34; href=&#34;pboard.swift&#34;&gt;view raw&lt;/a&gt;
+  &lt;/header&gt;
+  &lt;pre&gt;&lt;code class=&#34;swift&#34;&gt;import Cocoa
+
+struct Pboard: Codable {
+	var html: String
+	var text: String
+}
+var pb = Pboard(html: &amp;#34;&amp;#34;, text: &amp;#34;&amp;#34;)
+
+// get contents of general pasteboard
+let typeHtml = NSPasteboard.PasteboardType.html
+let typeText = NSPasteboard.PasteboardType.string
+
+if let s = NSPasteboard.general.string(forType:typeHtml) {
+	pb.html = s
+}
+if let s = NSPasteboard.general.string(forType:typeText) {
+	pb.text = s
+}
+
+// encode to JSON and print
+let encoder = JSONEncoder()
+let data = try encoder.encode(pb)
+let string = String(data: data, encoding: .utf8)!
+print(string)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Run with:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;swift pboard.swift
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Build with:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;xcrun -sdk macosx swiftc pboard.swift -o pboard
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item><item>
+      <title>Pinboard Bookmarks to Chrome</title>
+      <link>https://www.deanishe.net/snippet/pinboard-bookmarks-to-chrome/</link>
+      <pubDate>Fri, 06 Dec 2019 00:37:23 +0100</pubDate>
+      <guid>https://www.deanishe.net/snippet/pinboard-bookmarks-to-chrome/</guid>
+      <description>&lt;p&gt;Script to Overwrite a Chrome profile&#39;s bookmarks with your &lt;a href=&#34;https://pinboard.in&#34;&gt;Pinboard&lt;/a&gt; bookmarks.&lt;/p&gt;
+&lt;p&gt;The idea is to overwrite the bookmarks of an &lt;em&gt;unused&lt;/em&gt; Chrome profile with your Pinboard bookmarks to get rudimentary integration with apps (such as &lt;a href=&#34;https://www.deanishe.net/tags/alfred&#34;&gt;Alfred&lt;/a&gt;) that understand Chrome&#39;s bookmarks, but not Pinboard&#39;s.&lt;/p&gt;
+&lt;p&gt;Don&#39;t use it with an active profile: the generated file isn&#39;t a valid Chrome bookmarks file, and overwriting apps&amp;rsquo; private data is a bad idea in any case.&lt;/p&gt;
+&lt;h2 id=&#34;usage&#34;&gt;Usage&lt;/h2&gt;
+&lt;p&gt;The script requires two settings, the name of the Chrome profile to use and your Pinboard API key.&lt;/p&gt;
+&lt;p&gt;You can either set the &lt;code&gt;PROFILE_NAME&lt;/code&gt; and &lt;code&gt;PB_API_TOKEN&lt;/code&gt; variables in the script itself, or pass them via the &lt;code&gt;PROFILE&lt;/code&gt; and &lt;code&gt;PINBOARD_API_TOKEN&lt;/code&gt; environment variables respectively.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://pinboard.in/settings/password&#34;&gt;Here&#39;s where you can find your Pinboard API key&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Create a new Chrome profile for use with this script and set the &lt;code&gt;PROFILE&lt;/code&gt; environment variable to its name.&lt;/p&gt;
+&lt;p&gt;To view your available Chrome profiles, run the script with the &lt;code&gt;-l&lt;/code&gt; option, which will list the names of your profiles and the directories they&#39;re stored in. &lt;strong&gt;Take care not to overwrite an important profile&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Run the script every hour or so using &lt;code&gt;cron&lt;/code&gt; or a &lt;a href=&#34;https://www.launchd.info/&#34;&gt;launch agent&lt;/a&gt;. You can &lt;a href=&#34;http://launched.zerowidth.com/&#34;&gt;create a launch agent online here&lt;/a&gt; or use &lt;a href=&#34;https://www.soma-zone.com/LaunchControl/&#34;&gt;the awesome LaunchControl app&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;script&#34;&gt;Script&lt;/h2&gt;
+
+
+  
+  
+&lt;div class=&#34;code&#34;&gt;
+  &lt;header&gt;
+    &lt;div class=&#34;filename&#34;&gt;pb2chrome.py&lt;/div&gt;
+    &lt;a class=&#34;rawlink&#34; href=&#34;pb2chrome.py&#34;&gt;view raw&lt;/a&gt;
+  &lt;/header&gt;
+  &lt;pre&gt;&lt;code class=&#34;python&#34;&gt;#!/usr/bin/env python
+# encoding: utf-8
+#
+# Copyright (c) 2019 Dean Jackson &amp;lt;deanishe@deanishe.net&amp;gt;
+# MIT Licence. See http://opensource.org/licenses/MIT
+# Created on 2019-12-05
+
+
+&amp;#34;&amp;#34;&amp;#34;pb2chrome.py [-h|-l]
+
+Overwrite a Google Chrome profile&amp;#39;s bookmarks with your Pinboard bookmarks.
+
+You must set the following environment variables for the script to work:
+
+PROFILE_NAME
+    The name of the profile whose bookmarks should be overwritten.
+    You should create a new profile for use exclusively by this script.
+
+PINBOARD_API_TOKEN
+    Your Pinboard API key. Find it here:
+    https://pinboard.in/settings/password
+
+Options:
+    -l   list your Chrome profiles
+    -h   show this message and exit
+&amp;#34;&amp;#34;&amp;#34;
+
+from __future__ import print_function, absolute_import
+
+from collections import namedtuple
+from getopt import getopt
+import json
+import os
+import sys
+try:
+    from urllib2 import urlopen, URLError
+except ImportError:
+    from urllib.request import urlopen
+    from urllib.error import URLError
+
+# Name of Chrome profile to write Pinboard bookmarks to
+PROFILE = &amp;#39;Pinboard Sync&amp;#39;
+
+# Pinboard API token from https://pinboard.in/settings/password
+# You can set the API token here in the script or via the
+# PINBOARD_API_TOKEN environment variable.
+PB_API_TOKEN = &amp;#39;&amp;#39;
+
+PROFILE = os.getenv(&amp;#39;PROFILE_NAME&amp;#39;) or PROFILE
+PB_API_TOKEN = os.getenv(&amp;#39;PINBOARD_API_TOKEN&amp;#39;) or PB_API_TOKEN
+# URL to fetch all bookmarks from Pinboard
+PB_URL = &amp;#39;https://api.pinboard.in/v1/posts/all?auth_token={token}&amp;amp;format=json&amp;#39;
+
+
+Profile = namedtuple(&amp;#39;Profile&amp;#39;, &amp;#39;name dir&amp;#39;)
+
+
+def log(s, *args, **kwargs):
+    &amp;#34;&amp;#34;&amp;#34;Log to STDERR.&amp;#34;&amp;#34;&amp;#34;
+    if args:
+        s = s % args
+    elif kwargs:
+        s = s % kwargs
+    print(s, file=sys.stderr)
+
+
+def get_chrome_profiles():
+    &amp;#34;&amp;#34;&amp;#34;Get names &amp;amp; paths of Chrome profiles.&amp;#34;&amp;#34;&amp;#34;
+    profiles = []
+    dirpath = os.path.expanduser(&amp;#39;~/Library/Application Support/Google/Chrome/&amp;#39;)
+    with open(os.path.join(dirpath, &amp;#39;Local State&amp;#39;)) as fp:
+        state = json.load(fp)
+    for dirname, data in state[&amp;#39;profile&amp;#39;][&amp;#39;info_cache&amp;#39;].items():
+        name = data[&amp;#39;name&amp;#39;]
+        p = Profile(data[&amp;#39;name&amp;#39;], os.path.join(dirpath, dirname))
+        profiles.append(p)
+
+    profiles.sort(key=lambda p: p.dir)
+    return profiles
+
+
+def get_pinboard_bookmarks():
+    &amp;#34;&amp;#34;&amp;#34;Retrieve bookmarks from Pinboard API.&amp;#34;&amp;#34;&amp;#34;
+    r = urlopen(PB_URL.format(token=PB_API_TOKEN))
+    log(&amp;#39;[%d] %s&amp;#39;, r.getcode(), r.geturl().replace(PB_API_TOKEN, &amp;#39;&amp;lt;secret&amp;gt;&amp;#39;))
+    if r.getcode() &amp;gt; 200:
+        raise URLError(&amp;#39;bad response: %d&amp;#39; % r.getcode())
+    return json.load(r)
+
+
+def convert_bookmark(bookmark):
+    &amp;#34;&amp;#34;&amp;#34;Convert Pinboard bookmarks to Chrome bookmarks.&amp;#34;&amp;#34;&amp;#34;
+    return {
+        &amp;#39;name&amp;#39;: bookmark[&amp;#39;description&amp;#39;],
+        &amp;#39;url&amp;#39;: bookmark[&amp;#39;href&amp;#39;],
+        &amp;#39;type&amp;#39;: &amp;#39;url&amp;#39;,
+    }
+
+
+def write_chrome_bookmarks(bookmarks, path):
+    &amp;#34;&amp;#34;&amp;#34;Save Chrome bookmarks to file.&amp;#34;&amp;#34;&amp;#34;
+    data = {
+        &amp;#39;roots&amp;#39;: {
+            &amp;#39;bookmark_bar&amp;#39;: {
+                &amp;#39;children&amp;#39;: bookmarks,
+                &amp;#39;name&amp;#39;: &amp;#39;Pinboard&amp;#39;,
+                &amp;#39;type&amp;#39;: &amp;#39;folder&amp;#39;,
+            },
+        },
+        &amp;#39;version&amp;#39;: 1,
+    }
+    with open(path, &amp;#39;w&amp;#39;) as fp:
+        json.dump(data, fp, indent=2, separators=(&amp;#39;,&amp;#39;, &amp;#39;: &amp;#39;))
+
+
+def main():
+    &amp;#34;&amp;#34;&amp;#34;Run script.&amp;#34;&amp;#34;&amp;#34;
+    opts, _ = getopt(sys.argv[1:], &amp;#39;hl&amp;#39;)
+    for opt, _ in opts:
+        if opt == &amp;#39;-h&amp;#39;:
+            print(__doc__)
+            return
+        if opt == &amp;#39;-l&amp;#39;:
+            for p in get_chrome_profiles():
+                print(&amp;#39;%s -- %s&amp;#39; % (p.name, p.dir))
+            return
+
+    if not PB_API_TOKEN:
+        raise ValueError(
+            &amp;#39;Pinboard API token not set. Set the PB_API_TOKEN variable &amp;#39;
+            &amp;#39;in this script or the environment variable PINBOARD_API_TOKEN.&amp;#39;
+        )
+    if not PROFILE:
+        raise ValueError(
+            &amp;#39;Chrome profile not set. Set the PROFILE variable in this script &amp;#39;
+            &amp;#39;or the environment variable PROFILE_NAME.&amp;#39;
+        )
+
+    for profile in get_chrome_profiles():
+        if profile.name == PROFILE:
+            break
+    else:
+        raise ValueError(&amp;#39;Chrome profile &amp;#34;%s&amp;#34; not found&amp;#39; % PROFILE)
+
+    path = os.path.join(profile.dir, &amp;#39;Bookmarks&amp;#39;)
+    pinboard = get_pinboard_bookmarks()
+    log(&amp;#39;%d bookmark(s) loaded from Pinboard&amp;#39;, len(pinboard))
+    chrome = [convert_bookmark(d) for d in pinboard]
+    write_chrome_bookmarks(chrome, path)
+    log(&amp;#39;saved bookmarks to Chrome profile &amp;#34;%s&amp;#34; (%s)&amp;#39; % (profile.name, path))
+
+
+if __name__ == &amp;#39;__main__&amp;#39;:
+    main()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</description>
+    </item><item>
+      <title>Set the hostname on macOS</title>
+      <link>https://www.deanishe.net/snippet/mac-hostname/</link>
+      <pubDate>Mon, 25 Mar 2019 00:00:00 +0000</pubDate>
+      <guid>https://www.deanishe.net/snippet/mac-hostname/</guid>
+      <description>&lt;p&gt;Use &lt;code&gt;scutil&lt;/code&gt; to set a Mac&#39;s FQDN.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo scutil --set HostName fqdn.example.com
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;other-commands&#34;&gt;Other commands&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;scutil --get HostName        # fqdn, same as hostname -f
+scutil --get LocalHostName   # same as hostname -s
+scutil --get ComputerName    # your computer&#39;s &amp;quot;friendly&amp;quot; name
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;more-info&#34;&gt;More info&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://ss64.com/osx/scutil.html&#34;&gt;manpage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/tldr-pages/tldr/blob/master/pages/osx/scutil&#34;&gt;tldr&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item><item>
+      <title>Copying Alfred&#39;s environment to your shell</title>
+      <link>https://www.deanishe.net/snippet/create-alfred-environment/</link>
+      <pubDate>Sat, 08 Dec 2018 00:00:00 +0000</pubDate>
+      <guid>https://www.deanishe.net/snippet/create-alfred-environment/</guid>
+      <description>&lt;p&gt;A simple script to create an Alfred-like environment in your shell
+by extracting and exporting variables from info.plist.&lt;/p&gt;
+&lt;p&gt;Alfred uses &lt;a href=&#34;https://www.alfredapp.com/help/workflows/script-environment-variables/&#34; title=&#34;Alfred&#39;s environment variables&#34;&gt;environment variables&lt;/a&gt; to pass some important
+information to your workflow code, like the paths to the data and cache
+directories.&lt;/p&gt;
+&lt;p&gt;Source the following script in your shell and/or test runner to extract
+Alfred workflow variables from &lt;code&gt;info.plist&lt;/code&gt;:&lt;/p&gt;
+
+
+  
+  
+&lt;div class=&#34;code&#34;&gt;
+  &lt;header&gt;
+    &lt;div class=&#34;filename&#34;&gt;alfredenv.sh&lt;/div&gt;
+    &lt;a class=&#34;rawlink&#34; href=&#34;alfredenv.sh&#34;&gt;view raw&lt;/a&gt;
+  &lt;/header&gt;
+  &lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;# When sourced, creates an Alfred-like environment
+
+# getvar &amp;lt;name&amp;gt; | Read a value from info.plist
+getvar() {
+    local v=&amp;#34;$1&amp;#34;
+    /usr/libexec/PlistBuddy -c &amp;#34;Print :$v&amp;#34; info.plist
+}
+
+# Minimal workflow settings
+export alfred_workflow_bundleid=$( getvar &amp;#34;bundleid&amp;#34; )
+export alfred_workflow_name=$( getvar &amp;#34;name&amp;#34; )
+# Required if you&amp;#39;re using AwGo&amp;#39;s built-in update mechanism
+export alfred_workflow_version=$( getvar &amp;#34;version&amp;#34; )
+
+# Check for new prefs.json file introduced in Alfred 4
+if [[ -f &amp;#34;${HOME}/Library/Alfred/Application Support/prefs.json&amp;#34; ]]; then
+    # Standard locations of Alfred 4&amp;#43; cache &amp;amp; data directories
+    export alfred_workflow_cache=&amp;#34;${HOME}/Library/Caches/com.runningwithcrayons.Alfred/Workflow Data/${alfred_workflow_bundleid}&amp;#34;
+    export alfred_workflow_data=&amp;#34;${HOME}/Library/Application Support/Alfred/Workflow Data/${alfred_workflow_bundleid}&amp;#34;
+else
+    # Assume Alfred 3
+    export alfred_workflow_cache=&amp;#34;${HOME}/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/${alfred_workflow_bundleid}&amp;#34;
+    export alfred_workflow_data=&amp;#34;${HOME}/Library/Application Support/Alfred 3/Workflow Data/${alfred_workflow_bundleid}&amp;#34;
+    export alfred_version=&amp;#34;3.8&amp;#34;
+fi
+
+# Turn debugging on
+# export alfred_debug=1
+
+# If you want to extract workflow variables set in the workflow
+# configuration sheet:
+# export SCHEDULE_DAYS=$( getvar &amp;#34;variables:SCHEDULE_DAYS&amp;#34; )
+# export EVENT_CACHE_MINS=$( getvar &amp;#34;variables:EVENT_CACHE_MINS&amp;#34; )&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</description>
+    </item><item>
+      <title>Multiple app instances and scripting weirdness</title>
+      <link>https://www.deanishe.net/snippet/multiple-app-instances/</link>
+      <pubDate>Fri, 23 Jun 2017 10:12:40 +0200</pubDate>
+      <guid>https://www.deanishe.net/snippet/multiple-app-instances/</guid>
+      <description>&lt;p&gt;It&#39;s possible to start multiple instances of an application with &lt;code&gt;open -n&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;#!/bin/bash
+# First instance of application
+open -a &#39;Safari&#39; &#39;https://www.google.com&#39;
+# Open a second application process
+open -n -a &#39;Safari&#39; &#39;https://www.yahoo.com&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Any subsequent calls to &lt;code&gt;Safari&lt;/code&gt; via AppleScript will go to the newest instance of the application, but weirdly, JXA calls go to the first:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;#!/bin/bash
+open -a &#39;Safari&#39; &#39;https://www.google.com&#39;
+sleep 10  # give app and page time to load
+osascript -l JavaScript -e &amp;quot;Application(&#39;Safari&#39;).windows[0].currentTab.name()&amp;quot;
+# Google
+osascript -e &#39;tell application &amp;quot;Safari&amp;quot; to return the name of the current tab of the first window as text&#39;
+# Google
+
+# Open a new instance
+open -n -a &#39;Safari&#39; &#39;https://www.yahoo.com&#39;
+sleep 10  # give app and page time to load
+osascript -l JavaScript -e &amp;quot;Application(&#39;Safari&#39;).windows[0].currentTab.name()&amp;quot;
+# Google
+osascript -e &#39;tell application &amp;quot;Safari&amp;quot; to return the name of the current tab of the first window as text&#39;
+# Yahoo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To talk to a specific instance, sort them by PID. The lowest PID is the oldest instance, the highest the newest:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// Compare PIDs
+function sortByPid(proc1, proc2) {
+    var pid1 = proc1.unixId()
+    var pid2 = proc2.unixId()
+    if (pid1 &amp;lt; pid2) return -1
+    if (pid2 &amp;lt; pid1) return 1
+    return 0
+}
+
+// Return array of processes, sorted by PID
+function namedProcesses(name) {
+    var results = []
+    var procs = Application(&#39;System Events&#39;).processes.whose({name: name})
+    for (i=0; i&amp;lt;procs.length;i++) {
+        results.push(procs[i])
+    }
+    results.sort(sortByPid)
+    return results
+}
+
+function run() {
+    var procs = namedProcesses(&#39;Safari&#39;)
+    var oldest = procs[0]
+    var newest = procs[procs.length-1]
+    console.log(&#39;oldest proc (&#39; + newest.unixId() + &#39;)&#39;, oldest)
+    console.log(&#39;newest proc (&#39; + oldest.unixId() + &#39;)&#39;, newest)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Unfortunately, I haven&#39;t yet figured out how to get a Safari &lt;code&gt;Application&lt;/code&gt; from the Safari &lt;code&gt;Process&lt;/code&gt; object returned by System Events.&lt;/p&gt;</description>
+    </item><item>
+      <title>Workflow build script for Alfred</title>
+      <link>https://www.deanishe.net/snippet/workflow-build/</link>
+      <pubDate>Sun, 25 Dec 2016 16:33:14 +0100</pubDate>
+      <guid>https://www.deanishe.net/snippet/workflow-build/</guid>
+      <description>&lt;p&gt;A script for building &lt;a href=&#34;https://www.alfredapp.com&#34;&gt;Alfred&lt;/a&gt; workflows. Focussed on Python-based workflows.&lt;/p&gt;
+&lt;p&gt;Creates an &lt;code&gt;.alfredworkflow&lt;/code&gt; file from the contents of the specified
+directory. The generated file&#39;s name is based on the workflow&#39;s name
+and version extracted from &lt;code&gt;info.plist&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-none&#34;&gt;workflow-build [options] &amp;lt;workflow-dir&amp;gt;
+
+Build Alfred Workflows.
+
+Compile contents of &amp;lt;workflow-dir&amp;gt; to a ZIP file (with extension
+`.alfredworkflow`).
+
+The name of the output file is generated from the workflow name,
+which is extracted from the workflow&#39;s `info.plist`. If a `version`
+file is contained within the workflow directory, it&#39;s contents
+will be appended to the compiled workflow&#39;s filename.
+
+Usage:
+    workflow-build [-v|-q|-d] [-f] [-o &amp;lt;outputdir&amp;gt;] &amp;lt;workflow-dir&amp;gt;...
+    workflow-build (-h|--version)
+
+Options:
+    -o, --output=&amp;lt;outputdir&amp;gt;    Directory to save workflow(s) to.
+                                Default is current working directory.
+    -f, --force                 Overwrite existing files.
+    -h, --help                  Show this message and exit.
+    -V, --version               Show version number and exit.
+    -q, --quiet                 Only show errors and above.
+    -v, --verbose               Show info messages and above.
+    -d, --debug                 Show debug messages.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;source-code&#34;&gt;Source code&lt;/h2&gt;
+&lt;script type=&#34;application/javascript&#34; src=&#34;https://gist.github.com/deanishe/b16f018119ef3fe951af.js&#34;&gt;&lt;/script&gt;</description>
+    </item><item>
+      <title>Text Table in Python</title>
+      <link>https://www.deanishe.net/snippet/py-text-table/</link>
+      <pubDate>Sun, 25 Dec 2016 16:33:06 +0100</pubDate>
+      <guid>https://www.deanishe.net/snippet/py-text-table/</guid>
+      <description>&lt;p&gt;Python class to pretty-print tabluar data in a terminal.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;t = Table(titles=[&#39;Name&#39;, &#39;Position&#39;, &#39;Goals&#39;])
+t.add_row([&#39;Dave Smith&#39;, &#39;striker&#39;, 12])
+t.add_row([&#39;Angus McGregor&#39;, &#39;full back&#39;, 1])
+print(t)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;produces:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;     Name      | Position  | Goals
+----------------------------------
+Dave Smith     | striker   |    12
+Angus McGregor | full back |     1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Titles are centre-aligned, text left-aligned, and numbers
+right-aligned.&lt;/p&gt;
+
+
+  
+  
+&lt;div class=&#34;code&#34;&gt;
+  &lt;header&gt;
+    &lt;div class=&#34;filename&#34;&gt;table.py&lt;/div&gt;
+    &lt;a class=&#34;rawlink&#34; href=&#34;table.py&#34;&gt;view raw&lt;/a&gt;
+  &lt;/header&gt;
+  &lt;pre&gt;&lt;code class=&#34;python&#34;&gt;#!/usr/bin/env python
+# encoding: utf-8
+#
+# Copyright (c) 2016 Dean Jackson &amp;lt;deanishe@deanishe.net&amp;gt;
+#
+# MIT Licence. See http://opensource.org/licenses/MIT
+#
+# Created on 2016-12-19
+#
+
+&amp;#34;&amp;#34;&amp;#34;Text table.
+
+Pretty-print tabular data in the terminal. Smart alignment of numbers.
+&amp;#34;&amp;#34;&amp;#34;
+
+from __future__ import print_function, absolute_import
+
+import re
+
+
+def unicodify(obj):
+    if isinstance(obj, unicode):
+        return obj
+    if isinstance(obj, str):
+        return obj.decode(&amp;#39;utf-8&amp;#39;)
+    return unicode(obj)
+
+
+class Table(object):
+
+    def __init__(self, titles=None):
+        self.centred_titles = True
+        self.rows = []
+        self._titlerows = []
+        self._size = 0
+        if titles:
+            self.add_row(titles, True)
+
+    def add_row(self, row, title=False):
+        self.rows.append(row)
+        if title:
+            self._titlerows.append(True)
+        else:
+            self._titlerows.append(False)
+
+    def __unicode__(self):
+        # Calculate column parameters
+        ncols = max([len(r) for r in self.rows])
+        widths = [0] * ncols  # width of each column
+        formats = [None] * ncols  # format string for each column
+        # calculate column widths
+        for r in self.rows:
+            for i, n in enumerate([len(unicodify(c)) for c in r]):
+                widths[i] = max([widths[i], n])
+
+        # Widget
+        hr = [(u&amp;#39;-&amp;#39; * w) for w in widths]
+        hr = u&amp;#39;---&amp;#39;.join(hr)
+
+        # Get row data formatted to length
+        lines = []
+        for y, r in enumerate(self.rows):
+            title = self._titlerows[y]
+            objs = list(r)
+            while len(objs) &amp;lt; ncols:  # Ensure row is long enough
+                objs.append(u&amp;#39;&amp;#39;)
+
+            # Format each cell
+            data = []
+            for i, o in enumerate(objs):
+                u = unicodify(o)
+                w = widths[i]
+
+                # Column formatting
+                # left-align by default
+                fmt = u&amp;#39;{{:{}s}}&amp;#39;.format(w)
+                if title and self.centred_titles:  # centre-align titles
+                    fmt = u&amp;#39;{{:^{}s}}&amp;#39;.format(w)
+
+                elif u.strip():  # Use or determine default for this column
+                    if formats[i]:
+                        fmt = formats[i]
+                    elif re.match(r&amp;#39;[$€£]?\s*[0-9,.% ]&amp;#43;&amp;#39;, u):  # number
+                            fmt = u&amp;#39;{{:&amp;gt;{}s}}&amp;#39;.format(w)
+                    # Save as default for this column
+                    formats[i] = fmt
+
+                u = fmt.format(u)
+                data.append(u)
+
+            # Combine cells into text for row
+            u = u&amp;#39; | &amp;#39;.join(data)
+            lines.append(u)
+            if title:
+                lines.append(hr)
+
+        return u&amp;#39;\n&amp;#39;.join([s.rstrip() for s in lines])
+
+    def __str__(self):
+        return self.__unicode__().encode(&amp;#39;utf-8&amp;#39;)
+
+
+if __name__ == &amp;#39;__main__&amp;#39;:
+    data = [
+        (&amp;#39;Dave Smith&amp;#39;, 22, &amp;#39;carpenter&amp;#39;),
+        (&amp;#39;Ronald McDonald&amp;#39;, 7, &amp;#39;schoolboy&amp;#39;),
+        (&amp;#39;Davy Jones&amp;#39;, 57, &amp;#39;boxer&amp;#39;),
+        (&amp;#39;Reggie Becker&amp;#39;, 83),
+        (&amp;#39;Ricky Bobby&amp;#39;, 28, &amp;#39;racing driver&amp;#39;, &amp;#39;fraud&amp;#39;),
+        (&amp;#39;Spanish Harlan&amp;#39;, 22, &amp;#39;DJ&amp;#39;, &amp;#39;100&amp;#39;, &amp;#39;$30&amp;#39;),
+        (&amp;#39;Fast Howie&amp;#39;, 42, &amp;#39;gunfighter&amp;#39;, &amp;#39;27 kills&amp;#39;, &amp;#39;dolla dolla&amp;#39;),
+    ]
+    if False:
+        t = Table(titles=[&amp;#39;Name&amp;#39;, &amp;#39;Current Age&amp;#39;, &amp;#39;Occupation&amp;#39;])
+        for row in data:
+            t.add_row(row)
+        print(t)
+        print(&amp;#39;========================&amp;#39;)
+
+    t2 = Table(titles=[&amp;#39;Name&amp;#39;, &amp;#39;Current Age&amp;#39;, &amp;#39;Occupation&amp;#39;])
+    for row in data:
+        t2.add_row(row)
+
+    # t2.centred_titles = False
+    print(t2)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</description>
+    </item><item>
+      <title>Auto-swap day/night Alfred themes</title>
+      <link>https://www.deanishe.net/snippet/auto-swap-alfred-theme/</link>
+      <pubDate>Sun, 25 Dec 2016 16:32:05 +0100</pubDate>
+      <guid>https://www.deanishe.net/snippet/auto-swap-alfred-theme/</guid>
+      <description>&lt;p&gt;Swap Alfred theme at sunrise and sunset. Goes well with &lt;a href=&#34;https://justgetflux.com&#34;&gt;f.lux&lt;/a&gt;
+and macOS&#39;s night mode.&lt;/p&gt;
+&lt;p&gt;It uses &lt;a href=&#34;http://www.launchd.info&#34;&gt;launchd&lt;/a&gt; to call itself at sunrise and sunset (or
+as soon thereafter as your machine boots/wakes), and tells
+&lt;a href=&#34;https://www.alfredapp.com/&#34;&gt;Alfred&lt;/a&gt; to change its theme.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-none&#34;&gt;toggle_alfred_theme.py [-v|-q] [-d|--dark &amp;lt;theme&amp;gt;] [-l|--light &amp;lt;theme&amp;gt;]
+
+    **You must first edit this script (or the accompanying bash wrapper)
+    to set your location!**
+
+    These scripts (Python script and bash wrapper) live at:
+    https://gist.github.com/deanishe/ce442c3a768adedc9c39
+
+    Change Alfred&#39;s theme depending on whether it&#39;s dark outside. Theme
+    is changed immediately when the script is run and the script will
+    also call itself again at sunrise and sunset (via launchd) to change
+    Alfred&#39;s theme. It&#39;s works well together with F.lux, which can
+    switch to Yosemite&#39;s dark mode at sunset.
+
+    Just run the script *once* with your preferred themes:
+
+        python toggle_alfred_theme.py --dark &#39;Dark Theme&#39; --light &#39;Light Theme&#39;
+
+    or if you&#39;re using the wrapper:
+
+        toggle-alfred-theme.bash --dark &#39;Dark Theme&#39; --light &#39;Light Theme&#39;
+
+    and it will ensure Alfred&#39;s theme is changed every day at sunrise
+    and sunset.
+
+    To change your preferred themes, just run the script again.
+
+    Note: Because the script calls itself via launchd, if you move the
+    script, it will stop working until you run it again.
+
+Usage:
+
+    toggle_alfred_theme.py (-h|--help)
+    toggle_alfred_theme.py --timezones
+    toggle_alfred_theme.py (-t|--times)
+    toggle_alfred_theme.py [-n] [-v|-q] [--dark &amp;lt;theme&amp;gt;] [--light &amp;lt;theme&amp;gt;]
+
+Options:
+    -h, --help           Show this help message
+    -n, --nothing        Show what would be set, but make no changes
+    -t, --times          Show sunrise and sunset times for next 7 days
+    --timezones          Show a list of (&amp;gt;500) supported timezones
+    -l, --light &amp;lt;theme&amp;gt;  Alfred theme to use after sunrise
+    -d, --dark &amp;lt;theme&amp;gt;   Alfred theme to use after sunset
+    -v, --verbose        Show debugging info
+    -q, --quiet          Only show warnings and errors
+
+Installation &amp;amp; Setup:
+
+    This script requires the `astral` and `pytz` libraries. Install with:
+
+        pip install astral
+
+    It&#39;s better to install them in the same directory as this script (or
+    use a virtualenv), in order not to muck up your Python installation
+    or break other software:
+
+        pip install --target=/directory/where/this/script/is astral
+
+    Adjust the settings at the top of this script in the CONFIG section
+    (or in the bash wrapper) to match your location.
+
+    `TZ_NAME` must be one of the timezones recognised by `pytz`. To see
+    a list of all supported timezones, run this script with the
+    --timezones option. (Note there are over 500 timezones.)
+
+    You can usually find your town&#39;s latitude, longitude and elevation
+    on its Wikipedia page.
+
+How it works:
+
+    When run, the script will immediately set Alfred&#39;s theme according
+    to whether it&#39;s light or dark out, then tell OS X to run the script
+    again at the next sunset/sunrise. Even if your computer is off/asleep
+    when the script is supposed to run, it will be run immediately on
+    boot/wake.
+
+    Note: Yosemite has some issues with running LaunchAgents on wake. If
+    the script isn&#39;t running when it&#39;s supposed to on Yosemite, but the
+    script reports the correct times, it&#39;s a problem with Yosemite, not
+    this script.
+
+    The script has to fork into the background (i.e. exit successfully
+    immediately) because `launchctl` doesn&#39;t like the script updating
+    the Launch Agent while it&#39;s running it.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There are two files, the Python script and a bash wrapper. The wrapper&#39;s
+only purpose is to store your configuration, so you can upgrade the
+Python script without having to edit it again.&lt;/p&gt;
+&lt;p&gt;You &lt;strong&gt;must&lt;/strong&gt; set your location in one of the scripts before usage.&lt;/p&gt;
+&lt;p&gt;You can usually find the latitude, longitude and elevation of your town
+on its Wikipedia page.&lt;/p&gt;
+&lt;script type=&#34;application/javascript&#34; src=&#34;https://gist.github.com/deanishe/ce442c3a768adedc9c39.js&#34;&gt;&lt;/script&gt;</description>
+    </item>
+  </channel>
+</rss>

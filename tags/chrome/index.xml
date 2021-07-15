@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>chrome on deanishe.net</title>
+    <link>https://www.deanishe.net/tags/chrome/</link>
+    <description>Recent content in chrome on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/tags/chrome/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pinboard Bookmarks to Chrome</title>
+      <link>https://www.deanishe.net/snippet/pinboard-bookmarks-to-chrome/</link>
+      <pubDate>Fri, 06 Dec 2019 00:37:23 +0100</pubDate>
+      <guid>https://www.deanishe.net/snippet/pinboard-bookmarks-to-chrome/</guid>
+      <description>&lt;p&gt;Script to Overwrite a Chrome profile&#39;s bookmarks with your &lt;a href=&#34;https://pinboard.in&#34;&gt;Pinboard&lt;/a&gt; bookmarks.&lt;/p&gt;
+&lt;p&gt;The idea is to overwrite the bookmarks of an &lt;em&gt;unused&lt;/em&gt; Chrome profile with your Pinboard bookmarks to get rudimentary integration with apps (such as &lt;a href=&#34;https://www.deanishe.net/tags/alfred&#34;&gt;Alfred&lt;/a&gt;) that understand Chrome&#39;s bookmarks, but not Pinboard&#39;s.&lt;/p&gt;
+&lt;p&gt;Don&#39;t use it with an active profile: the generated file isn&#39;t a valid Chrome bookmarks file, and overwriting apps&amp;rsquo; private data is a bad idea in any case.&lt;/p&gt;
+&lt;h2 id=&#34;usage&#34;&gt;Usage&lt;/h2&gt;
+&lt;p&gt;The script requires two settings, the name of the Chrome profile to use and your Pinboard API key.&lt;/p&gt;
+&lt;p&gt;You can either set the &lt;code&gt;PROFILE_NAME&lt;/code&gt; and &lt;code&gt;PB_API_TOKEN&lt;/code&gt; variables in the script itself, or pass them via the &lt;code&gt;PROFILE&lt;/code&gt; and &lt;code&gt;PINBOARD_API_TOKEN&lt;/code&gt; environment variables respectively.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://pinboard.in/settings/password&#34;&gt;Here&#39;s where you can find your Pinboard API key&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Create a new Chrome profile for use with this script and set the &lt;code&gt;PROFILE&lt;/code&gt; environment variable to its name.&lt;/p&gt;
+&lt;p&gt;To view your available Chrome profiles, run the script with the &lt;code&gt;-l&lt;/code&gt; option, which will list the names of your profiles and the directories they&#39;re stored in. &lt;strong&gt;Take care not to overwrite an important profile&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Run the script every hour or so using &lt;code&gt;cron&lt;/code&gt; or a &lt;a href=&#34;https://www.launchd.info/&#34;&gt;launch agent&lt;/a&gt;. You can &lt;a href=&#34;http://launched.zerowidth.com/&#34;&gt;create a launch agent online here&lt;/a&gt; or use &lt;a href=&#34;https://www.soma-zone.com/LaunchControl/&#34;&gt;the awesome LaunchControl app&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;script&#34;&gt;Script&lt;/h2&gt;
+
+
+  
+  
+&lt;div class=&#34;code&#34;&gt;
+  &lt;header&gt;
+    &lt;div class=&#34;filename&#34;&gt;pb2chrome.py&lt;/div&gt;
+    &lt;a class=&#34;rawlink&#34; href=&#34;pb2chrome.py&#34;&gt;view raw&lt;/a&gt;
+  &lt;/header&gt;
+  &lt;pre&gt;&lt;code class=&#34;python&#34;&gt;#!/usr/bin/env python
+# encoding: utf-8
+#
+# Copyright (c) 2019 Dean Jackson &amp;lt;deanishe@deanishe.net&amp;gt;
+# MIT Licence. See http://opensource.org/licenses/MIT
+# Created on 2019-12-05
+
+
+&amp;#34;&amp;#34;&amp;#34;pb2chrome.py [-h|-l]
+
+Overwrite a Google Chrome profile&amp;#39;s bookmarks with your Pinboard bookmarks.
+
+You must set the following environment variables for the script to work:
+
+PROFILE_NAME
+    The name of the profile whose bookmarks should be overwritten.
+    You should create a new profile for use exclusively by this script.
+
+PINBOARD_API_TOKEN
+    Your Pinboard API key. Find it here:
+    https://pinboard.in/settings/password
+
+Options:
+    -l   list your Chrome profiles
+    -h   show this message and exit
+&amp;#34;&amp;#34;&amp;#34;
+
+from __future__ import print_function, absolute_import
+
+from collections import namedtuple
+from getopt import getopt
+import json
+import os
+import sys
+try:
+    from urllib2 import urlopen, URLError
+except ImportError:
+    from urllib.request import urlopen
+    from urllib.error import URLError
+
+# Name of Chrome profile to write Pinboard bookmarks to
+PROFILE = &amp;#39;Pinboard Sync&amp;#39;
+
+# Pinboard API token from https://pinboard.in/settings/password
+# You can set the API token here in the script or via the
+# PINBOARD_API_TOKEN environment variable.
+PB_API_TOKEN = &amp;#39;&amp;#39;
+
+PROFILE = os.getenv(&amp;#39;PROFILE_NAME&amp;#39;) or PROFILE
+PB_API_TOKEN = os.getenv(&amp;#39;PINBOARD_API_TOKEN&amp;#39;) or PB_API_TOKEN
+# URL to fetch all bookmarks from Pinboard
+PB_URL = &amp;#39;https://api.pinboard.in/v1/posts/all?auth_token={token}&amp;amp;format=json&amp;#39;
+
+
+Profile = namedtuple(&amp;#39;Profile&amp;#39;, &amp;#39;name dir&amp;#39;)
+
+
+def log(s, *args, **kwargs):
+    &amp;#34;&amp;#34;&amp;#34;Log to STDERR.&amp;#34;&amp;#34;&amp;#34;
+    if args:
+        s = s % args
+    elif kwargs:
+        s = s % kwargs
+    print(s, file=sys.stderr)
+
+
+def get_chrome_profiles():
+    &amp;#34;&amp;#34;&amp;#34;Get names &amp;amp; paths of Chrome profiles.&amp;#34;&amp;#34;&amp;#34;
+    profiles = []
+    dirpath = os.path.expanduser(&amp;#39;~/Library/Application Support/Google/Chrome/&amp;#39;)
+    with open(os.path.join(dirpath, &amp;#39;Local State&amp;#39;)) as fp:
+        state = json.load(fp)
+    for dirname, data in state[&amp;#39;profile&amp;#39;][&amp;#39;info_cache&amp;#39;].items():
+        name = data[&amp;#39;name&amp;#39;]
+        p = Profile(data[&amp;#39;name&amp;#39;], os.path.join(dirpath, dirname))
+        profiles.append(p)
+
+    profiles.sort(key=lambda p: p.dir)
+    return profiles
+
+
+def get_pinboard_bookmarks():
+    &amp;#34;&amp;#34;&amp;#34;Retrieve bookmarks from Pinboard API.&amp;#34;&amp;#34;&amp;#34;
+    r = urlopen(PB_URL.format(token=PB_API_TOKEN))
+    log(&amp;#39;[%d] %s&amp;#39;, r.getcode(), r.geturl().replace(PB_API_TOKEN, &amp;#39;&amp;lt;secret&amp;gt;&amp;#39;))
+    if r.getcode() &amp;gt; 200:
+        raise URLError(&amp;#39;bad response: %d&amp;#39; % r.getcode())
+    return json.load(r)
+
+
+def convert_bookmark(bookmark):
+    &amp;#34;&amp;#34;&amp;#34;Convert Pinboard bookmarks to Chrome bookmarks.&amp;#34;&amp;#34;&amp;#34;
+    return {
+        &amp;#39;name&amp;#39;: bookmark[&amp;#39;description&amp;#39;],
+        &amp;#39;url&amp;#39;: bookmark[&amp;#39;href&amp;#39;],
+        &amp;#39;type&amp;#39;: &amp;#39;url&amp;#39;,
+    }
+
+
+def write_chrome_bookmarks(bookmarks, path):
+    &amp;#34;&amp;#34;&amp;#34;Save Chrome bookmarks to file.&amp;#34;&amp;#34;&amp;#34;
+    data = {
+        &amp;#39;roots&amp;#39;: {
+            &amp;#39;bookmark_bar&amp;#39;: {
+                &amp;#39;children&amp;#39;: bookmarks,
+                &amp;#39;name&amp;#39;: &amp;#39;Pinboard&amp;#39;,
+                &amp;#39;type&amp;#39;: &amp;#39;folder&amp;#39;,
+            },
+        },
+        &amp;#39;version&amp;#39;: 1,
+    }
+    with open(path, &amp;#39;w&amp;#39;) as fp:
+        json.dump(data, fp, indent=2, separators=(&amp;#39;,&amp;#39;, &amp;#39;: &amp;#39;))
+
+
+def main():
+    &amp;#34;&amp;#34;&amp;#34;Run script.&amp;#34;&amp;#34;&amp;#34;
+    opts, _ = getopt(sys.argv[1:], &amp;#39;hl&amp;#39;)
+    for opt, _ in opts:
+        if opt == &amp;#39;-h&amp;#39;:
+            print(__doc__)
+            return
+        if opt == &amp;#39;-l&amp;#39;:
+            for p in get_chrome_profiles():
+                print(&amp;#39;%s -- %s&amp;#39; % (p.name, p.dir))
+            return
+
+    if not PB_API_TOKEN:
+        raise ValueError(
+            &amp;#39;Pinboard API token not set. Set the PB_API_TOKEN variable &amp;#39;
+            &amp;#39;in this script or the environment variable PINBOARD_API_TOKEN.&amp;#39;
+        )
+    if not PROFILE:
+        raise ValueError(
+            &amp;#39;Chrome profile not set. Set the PROFILE variable in this script &amp;#39;
+            &amp;#39;or the environment variable PROFILE_NAME.&amp;#39;
+        )
+
+    for profile in get_chrome_profiles():
+        if profile.name == PROFILE:
+            break
+    else:
+        raise ValueError(&amp;#39;Chrome profile &amp;#34;%s&amp;#34; not found&amp;#39; % PROFILE)
+
+    path = os.path.join(profile.dir, &amp;#39;Bookmarks&amp;#39;)
+    pinboard = get_pinboard_bookmarks()
+    log(&amp;#39;%d bookmark(s) loaded from Pinboard&amp;#39;, len(pinboard))
+    chrome = [convert_bookmark(d) for d in pinboard]
+    write_chrome_bookmarks(chrome, path)
+    log(&amp;#39;saved bookmarks to Chrome profile &amp;#34;%s&amp;#34; (%s)&amp;#39; % (profile.name, path))
+
+
+if __name__ == &amp;#39;__main__&amp;#39;:
+    main()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /weather/
+Disallow: /ip/
+
+Sitemap: https://www.deanishe.net/sitemap.xml

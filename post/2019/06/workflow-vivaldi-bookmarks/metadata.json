@@ -1,0 +1,13 @@
+{
+  "alfredworkflow" : {
+    "category" : "Internet",
+    "readme" : "",
+    "createdby" : "Marat Dreizin",
+    "downloadurl" : "https://www.deanishe.net/post/2019/06/workflow-vivaldi-bookmarks/Vivaldi%20Bookmarks.alfredworkflow",
+    "version" : "dev",
+    "bundleid" : "com.mdreizin.chrome.bookmarks",
+    "description" : "Chrome\/Canary\/Chromium bookmarks search workflow for Alfred",
+    "name" : "Chrome Bookmarks",
+    "webaddress" : "https:\/\/mdreizin.github.io\/chrome-bookmarks-alfred-workflow"
+  }
+}

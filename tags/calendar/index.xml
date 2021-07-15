@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>calendar on deanishe.net</title>
+    <link>https://www.deanishe.net/tags/calendar/</link>
+    <description>Recent content in calendar on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/tags/calendar/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Workflow: Video Conferences</title>
+      <link>https://www.deanishe.net/post/2020/05/workflow-video-conferences/</link>
+      <pubDate>Fri, 01 May 2020 12:06:23 +0200</pubDate>
+      <guid>https://www.deanishe.net/post/2020/05/workflow-video-conferences/</guid>
+      <description>&lt;p&gt;An Alfred 4+ workflow that shows upcoming calendar events that are video conferences, and opens the links to them. It supports Lync, Zoom, Microsoft Teams and Google Meet out of the box, but can be easily configured to support additional services.&lt;/p&gt;
+&lt;p&gt;The workflow was inspired by &lt;a href=&#34;https://www.alfredforum.com/topic/12894-workflow-to-get-next-meeting-locationurl-and-open-it/&#34;&gt;this thread on the Alfred forum&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
+&lt;p&gt;Download &lt;a href=&#34;Video%20Conferences.alfredworkflow&#34;&gt;Video Conferences.alfredworkflow&lt;/a&gt; and double-click to install.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; You must grant the workflow/Alfred permission to access your calendars or it won&#39;t work. Obviously.&lt;/p&gt;
+&lt;h2 id=&#34;usage&#34;&gt;Usage&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;.vc [&amp;lt;query&amp;gt;]&lt;/code&gt; — Search upcoming video-conference events
+&lt;ul&gt;
+&lt;li&gt;&lt;kbd&gt;↩&lt;/kbd&gt; — Open video-conference URL in your default browser&lt;/li&gt;
+&lt;li&gt;&lt;kbd&gt;⌘↩&lt;/kbd&gt; — Show event in Calendar.app&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.vc reload&lt;/code&gt; — Force reload the cached list of events&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;configuration&#34;&gt;Configuration&lt;/h2&gt;
+&lt;p&gt;The workflow has a few knobs to turn in its configuration sheet.&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;&lt;code&gt;lookahead_days&lt;/code&gt; (default: &lt;code&gt;3&lt;/code&gt;)&lt;/dt&gt;
+&lt;dd&gt;The number of days to fetch events for.&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;max_cache_seconds&lt;/code&gt; (default: &lt;code&gt;300&lt;/code&gt;)&lt;/dt&gt;
+&lt;dd&gt;How long (in seconds, obvs) to cache the list of events for. Fetching events is pretty slow, so adjust this to find the right compromise between speed and freshness. You can refresh the cached list of events at any time by entering the search query &amp;ldquo;reload&amp;rdquo;.&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;account_1&lt;/code&gt; (default: empty)&lt;/dt&gt;
+&lt;dd&gt;Set &lt;code&gt;account_*&lt;/code&gt; variables to the names of accounts you&#39;d like to limit the search to. For example, if you only want to search your iCloud account, set &lt;code&gt;account_1&lt;/code&gt; to &lt;code&gt;iCloud&lt;/code&gt;. If you&#39;d also like to search your Nextcloud account, create another variable starting with &lt;code&gt;account_&lt;/code&gt; and set it to &lt;code&gt;Nextcloud&lt;/code&gt; etc.&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;calendar_1&lt;/code&gt;, &lt;code&gt;calendar_2&lt;/code&gt; (default: empty)&lt;/dt&gt;
+&lt;dd&gt;As with &lt;code&gt;account_*&lt;/code&gt; variables, you can use variables starting with &lt;code&gt;calendar_&lt;/code&gt; to restrict the search to only calendars whose names match the variables, e.g. if you&#39;ve set &lt;code&gt;calendar_1&lt;/code&gt; to &lt;code&gt;Work&lt;/code&gt;, only calendars named &amp;ldquo;Work&amp;rdquo; will be searched.&lt;/dd&gt;
+&lt;dt&gt;&lt;code&gt;regex_zoom&lt;/code&gt;, &lt;code&gt;regex_lync&lt;/code&gt; etc.&lt;/dt&gt;
+&lt;dd&gt;Variables starting with &lt;code&gt;regex_&lt;/code&gt; are used to search for video conference URLs. There are currently regular expressions for Zoom, Lync and Google Meet. Add new variables starting with &lt;code&gt;regex_&lt;/code&gt; to add regular expressions that match the URLs of other services you&#39;d like to add.&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h2 id=&#34;changelog&#34;&gt;Changelog&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;v0.1.4&lt;/strong&gt; (2021-06-17)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Add regex for new Microsoft Teams URL format&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;v0.1.3&lt;/strong&gt; (2020-11-20)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Add support for Microsoft Teams&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;v0.1.2&lt;/strong&gt; (2020-11-19)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Smarter date parsing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;v0.1.1&lt;/strong&gt; (2020-05-19)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Re-open workflow after force reload&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;v0.1.0&lt;/strong&gt; (2020-05-18)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fix Zoom regex to match meeting URLs without a password&lt;/li&gt;
+&lt;li&gt;Shorten default cache period to 5 minutes&lt;/li&gt;
+&lt;li&gt;Fix reload logic&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;v0.0.3&lt;/strong&gt; (2020-05-16)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Add additional Zoom regex&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;v0.0.2&lt;/strong&gt; (2020-05-04)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Show ongoing meetings&lt;/li&gt;
+&lt;li&gt;Add support for Google Meet&lt;/li&gt;
+&lt;li&gt;Event icons have the same colour as their calendars&lt;/li&gt;
+&lt;li&gt;Add alternate action &lt;kbd&gt;⌘↩&lt;/kbd&gt; to show event in Calendar.app&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;v0.0.1&lt;/strong&gt; (2020-05-02)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Initial release&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item><item>
+      <title>Google Calendar for Alfred</title>
+      <link>https://www.deanishe.net/alfred-gcal-workflow/</link>
+      <pubDate>Sat, 11 Jan 2020 07:54:28 +0100</pubDate>
+      <guid>https://www.deanishe.net/alfred-gcal-workflow/</guid>
+      <description>&lt;div align=&#34;center&#34;&gt;
+    &lt;img height=&#34;128&#34; width=&#34;128&#34; src=&#34;https://raw.githubusercontent.com/deanishe/alfred-gcal/master/icons/icon.png&#34;&gt;
+&lt;/div&gt;
+&lt;p&gt;View Google Calendar events in &lt;a href=&#34;https://alfredapp.com/&#34;&gt;Alfred&lt;/a&gt;. Supports multiple accounts.&lt;/p&gt;
+&lt;!-- MarkdownTOC autolink=&#34;true&#34; bracket=&#34;round&#34; depth=&#34;3&#34; autoanchor=&#34;true&#34; --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#google-calendar-for-alfred&#34;&gt;Google Calendar for Alfred&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#download--installation&#34;&gt;Download &amp;amp; installation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#usage&#34;&gt;Usage&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#date-format&#34;&gt;Date format&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#add-event-format&#34;&gt;Add event format&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#configuration&#34;&gt;Configuration&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#licensing--thanks&#34;&gt;Licensing &amp;amp; thanks&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#privacy&#34;&gt;Privacy&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- /MarkdownTOC --&gt;
+&lt;h2 id=&#34;download--installation&#34;&gt;&lt;a name=&#34;download--installation&#34;&gt;&lt;/a&gt;
+Download &amp;amp; installation&lt;/h2&gt;
+&lt;p&gt;Grab the workflow from &lt;a href=&#34;https://github.com/deanishe/alfred-gcal/releases/latest&#34;&gt;GitHub releases&lt;/a&gt;. Download the &lt;code&gt;Google-Calendar-View-X.X.alfredworkflow&lt;/code&gt; file and double-click it to install.&lt;/p&gt;
+&lt;h2 id=&#34;usage&#34;&gt;&lt;a name=&#34;usage&#34;&gt;&lt;/a&gt;
+Usage&lt;/h2&gt;
+&lt;p&gt;When run, the workflow will open Google Calendar in your browser and ask for permission to access your calendars. If you do not grant permission, it won&#39;t work. The workflow requests permission to edit your calendars, as this is needed for the &amp;ldquo;Add New Event&amp;rdquo; feature (keyword &lt;code&gt;gnew&lt;/code&gt;). It does not otherwise alter your calendars or events in any way.&lt;/p&gt;
+&lt;p&gt;You will also be prompted to activate some calendars (the workflow will show events from these calendars). You can alter the active calendars or add/remove Google accounts in the settings using keyword &lt;code&gt;gcalconf&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;gcal&lt;/code&gt; — Show upcoming events.
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;query&amp;gt;&lt;/code&gt; — Filter list of events.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;↩&lt;/code&gt; — Open event in browser or day in workflow.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;⌘↩&lt;/code&gt; — Open event in Google Maps or Apple Maps (if event has a location).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;⇧&lt;/code&gt; / &lt;code&gt;⌘Y&lt;/code&gt; — Quicklook event details.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;today&lt;/code&gt; / &lt;code&gt;tomorrow&lt;/code&gt; / &lt;code&gt;yesterday&lt;/code&gt; — Show events for the given day.
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;query&amp;gt;&lt;/code&gt; / &lt;code&gt;↩&lt;/code&gt; / &lt;code&gt;⌘↩&lt;/code&gt; / &lt;code&gt;⇧&lt;/code&gt; / &lt;code&gt;⌘Y&lt;/code&gt; — As above.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gdate [&amp;lt;date&amp;gt;]&lt;/code&gt; — Show one or more dates. See below for query format.
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;↩&lt;/code&gt; — Show events for the given day.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gnew [&amp;lt;query&amp;gt;]&lt;/code&gt; — Add a new event in the one of active calendars. (example: Some meeting at Office at 5pm with Ian)
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;↩&lt;/code&gt; — Create event in selected calendar.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gcalconf [&amp;lt;query&amp;gt;]&lt;/code&gt; — Show workflow configuration.
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Active Calendars…&lt;/code&gt; — Turn calendars on/off.
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;↩&lt;/code&gt; — Toggle calendar on/off.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Add Account…&lt;/code&gt; — Add a Google account.
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;↩&lt;/code&gt; — Open Google login in browser to authorise an account.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;your.email@gmail.com&lt;/code&gt; — Your logged in Google account(s).
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;↩&lt;/code&gt; — Remove account.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Open Locations in Google Maps/Apple Maps&lt;/code&gt; — Choose app to open event locations.
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;↩&lt;/code&gt; — Toggle setting between Google Maps &amp;amp; Apple Maps.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Workflow is up to Date&lt;/code&gt; / &lt;code&gt;An Update is Available&lt;/code&gt; — Whether a newer version of the workflow is available.
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;↩&lt;/code&gt; — Check for or install update.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Open Locations in XYZ&lt;/code&gt; — Open locations in Google Maps or Apple Maps.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;↩&lt;/code&gt; — Toggle between applications.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Open Documentation&lt;/code&gt; — Open this page in your brower.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Get Help&lt;/code&gt; — Visit &lt;a href=&#34;https://www.alfredforum.com/topic/11016-google-calendar-view/&#34;&gt;the thread for this workflow&lt;/a&gt; on &lt;a href=&#34;https://www.alfredforum.com/&#34;&gt;AlfredForum.com&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Report Issue&lt;/code&gt; — &lt;a href=&#34;https://github.com/deanishe/alfred-gcal/issues&#34;&gt;Open an issue&lt;/a&gt; on GitHub.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Clear Cached Calendars &amp;amp; Events&lt;/code&gt; — Remove cached lists of calendars and events.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a name=&#34;date-format&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;date-format&#34;&gt;Date format&lt;/h3&gt;
+&lt;p&gt;When viewing dates/events, you can specify and jump to a particular date using the following input format:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;YYYY-MM-DD&lt;/code&gt; — e.g. &lt;code&gt;2017-12-01&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;YYYYMMDD&lt;/code&gt; — e.g. &lt;code&gt;20180101&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;[+|-]N[d|w]&lt;/code&gt; — e.g.:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;1&lt;/code&gt;, &lt;code&gt;1d&lt;/code&gt; or &lt;code&gt;+1d&lt;/code&gt; for tomorrow&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-1&lt;/code&gt; or &lt;code&gt;-1d&lt;/code&gt; for yesterday&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3w&lt;/code&gt; for 21 days from now&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-4w&lt;/code&gt; for 4 weeks ago&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a name=&#34;add-event-format&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;add-event-format&#34;&gt;Add event format&lt;/h3&gt;
+&lt;p&gt;The &amp;ldquo;Add New Event&amp;rdquo; feature (keyword &lt;code&gt;gnew&lt;/code&gt;) creates an event using Google Calendar&#39;s natural language syntax. This doesn&#39;t appear to be properly documented anywhere, but it is pretty powerful. You can specify event title, location, time &amp;amp; duration and repetition. Some examples:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Wash pants&lt;/code&gt; — creates an event titled &amp;ldquo;Wash pants&amp;rdquo; starting now using your default event duration&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Clean pants party tomorrow&lt;/code&gt; — creates an all-day event for tomorrow title &amp;ldquo;Clean pants party&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Drink beer every day 2000-2200&lt;/code&gt; — creates an event titled &amp;ldquo;Drink beer&amp;rdquo; starting at 8pm, finishing at 10pm, and repeating every day.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;configuration&#34;&gt;&lt;a name=&#34;configuration&#34;&gt;&lt;/a&gt;
+Configuration&lt;/h2&gt;
+&lt;p&gt;There are a couple of options in the workflow&#39;s configuration sheet (the &lt;code&gt;[x]&lt;/code&gt; button in Alfred Preferences):&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Setting&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;CALENDAR_APP&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Name of application to open Google Calendar URLs (not map URLs) in. If blank, your default browser is used.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;EVENT_CACHE_MINS&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Number of minutes to cache event lists before updating from the server.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;SCHEDULE_DAYS&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;The number of days&amp;rsquo; events to show with the &lt;code&gt;gcal&lt;/code&gt; keyword.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;APPLE_MAPS&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Set to &lt;code&gt;1&lt;/code&gt; to open map links in Apple Maps instead of Google Maps. This option can be toggled from within the workflow&#39;s configuration with keyword &lt;code&gt;gcalconf&lt;/code&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;licensing--thanks&#34;&gt;&lt;a name=&#34;licensing--thanks&#34;&gt;&lt;/a&gt;
+Licensing &amp;amp; thanks&lt;/h2&gt;
+&lt;p&gt;This workflow is released under the &lt;a href=&#34;https://opensource.org/licenses/MIT&#34;&gt;MIT Licence&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;It is heavily based on the &lt;a href=&#34;https://github.com/google/google-api-go-client&#34;&gt;Google API libraries for Go&lt;/a&gt; (&lt;a href=&#34;https://github.com/google/google-api-go-client/blob/master/LICENSE&#34;&gt;BSD 3-clause licence&lt;/a&gt;) and &lt;a href=&#34;https://github.com/deanishe/awgo&#34;&gt;AwGo&lt;/a&gt; libraries (&lt;a href=&#34;https://opensource.org/licenses/MIT&#34;&gt;MIT&lt;/a&gt;), and of course, &lt;a href=&#34;https://calendar.google.com/calendar/&#34;&gt;Google Calendar&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The icons are from or based on &lt;a href=&#34;http://fortawesome.github.io/Font-Awesome/&#34;&gt;Font Awesome&lt;/a&gt; and &lt;a href=&#34;https://erikflowers.github.io/weather-icons/&#34;&gt;Weather Icons&lt;/a&gt; (both &lt;a href=&#34;http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&amp;amp;id=OFL&#34;&gt;SIL&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Special thanks to &lt;a href=&#34;https://github.com/diffmike&#34;&gt;@diffmike&lt;/a&gt; for adding the &amp;ldquo;Add New Event&amp;rdquo; feature.&lt;/p&gt;
+&lt;h2 id=&#34;privacy&#34;&gt;&lt;a name=&#34;privacy&#34;&gt;&lt;/a&gt;
+Privacy&lt;/h2&gt;
+&lt;p&gt;The data used and accessed by this workflow are stored exclusively on your own Mac. Nothing is shared with anyone. When you authorise this workflow to access your Google Calendars, the only person you are enabling to read that data is you.&lt;/p&gt;
+&lt;!--more--&gt;</description>
+    </item>
+  </channel>
+</rss>

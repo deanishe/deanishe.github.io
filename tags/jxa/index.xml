@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>jxa on deanishe.net</title>
+    <link>https://www.deanishe.net/tags/jxa/</link>
+    <description>Recent content in jxa on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/tags/jxa/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Workflow: Search in App</title>
+      <link>https://www.deanishe.net/post/2019/06/workflow-search-in-app/</link>
+      <pubDate>Sun, 09 Jun 2019 00:00:00 +0000</pubDate>
+      <guid>https://www.deanishe.net/post/2019/06/workflow-search-in-app/</guid>
+      <description>&lt;p&gt;Alfred workflow to pass a query to an application&#39;s own search by simulating &lt;kbd&gt;⌘F&lt;/kbd&gt;.&lt;/p&gt;
+&lt;p&gt;For applications that aren&#39;t scriptable via AppleScript or URL scheme, you can simulate keypresses to open an app&#39;s own search function and enter a query. This workflow is a relatively flexible implementation of that.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;#downloads&#34;&gt;Download here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;By default, the workflow puts your query on macOS&#39;s &lt;a href=&#34;#find-pasteboard&#34;&gt;Find Pasteboard&lt;/a&gt;, activates the target application, waits for it to be visible, and then simulates &lt;kbd&gt;⌘F&lt;/kbd&gt;.&lt;/p&gt;
+&lt;p&gt;If the application doesn&#39;t support the Find Pasteboard, set &lt;code&gt;use_find_pasteboard&lt;/code&gt; to &lt;code&gt;0&lt;/code&gt; (see &lt;a href=&#34;#configuration&#34;&gt;below&lt;/a&gt;) and the workflow attempts to type the query into the search field instead.&lt;/p&gt;
+&lt;p&gt;Finally, it simulates &lt;kbd&gt;↩&lt;/kbd&gt; (by default) to start the search.&lt;/p&gt;
+&lt;h2 id=&#34;configuration&#34;&gt;Configuration&lt;/h2&gt;
+&lt;p&gt;Configure the workflow via its configuration sheet in Alfred Preferences:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;screenshot-setup.png&#34; alt=&#34;Workflow configuration sheet&#34; title=&#34;screenshot of Alfred&#39;s workflow configuration sheet&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;options&#34;&gt;Options&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;app_name&lt;/code&gt; is the name of the application you want to search in.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;delay&lt;/code&gt; is how long (in seconds) the workflow waits for the app&#39;s search dialog to activate after sending &lt;kbd&gt;⌘F&lt;/kbd&gt; before it attempts to type the query or send &lt;kbd&gt;↩&lt;/kbd&gt;.&lt;/p&gt;
+&lt;p&gt;If &lt;code&gt;press_return&lt;/code&gt; is set to &lt;code&gt;1&lt;/code&gt;, the workflow simulates &lt;kbd&gt;↩&lt;/kbd&gt; to start the search.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;timeout&lt;/code&gt; is how long (in seconds) the workflow waits for the application to become visible.&lt;/p&gt;
+&lt;p&gt;If &lt;code&gt;use_find_pasteboard&lt;/code&gt; is &lt;code&gt;1&lt;/code&gt;, the workflow puts the search query on macOS&#39;s &lt;a href=&#34;#find-pasteboard&#34;&gt;Find pasteboard&lt;/a&gt;. Otherwise, the workflow attempts to type the search query in the application&#39;s search field.&lt;/p&gt;
+&lt;p&gt;If &lt;code&gt;wait_visible&lt;/code&gt; is set to &lt;code&gt;1&lt;/code&gt;, the workflow waits until the application is visible before simulating any keypresses.&lt;/p&gt;
+&lt;h2 id=&#34;find-pasteboard&#34;&gt;Find Pasteboard&lt;/h2&gt;
+&lt;p&gt;macOS has multiple pasteboards (clipboards), and one of these is called the Find Pasteboard (or Search Pasteboard). In applications that use macOS&#39;s native search, the Find Pasteboard is automatically used for the search query (including live updates). You can put the currently selected text on the Find Pasteboard with &lt;kbd&gt;⌘E&lt;/kbd&gt;.&lt;/p&gt;
+&lt;p&gt;In Alfred 4+, the &lt;a href=&#34;https://www.alfredapp.com/help/workflows/triggers/hotkey/&#34; title=&#34;Alfred&#39;s help for Hotkey triggers&#34;&gt;Hotkey trigger&lt;/a&gt; can also pass the contents of the Find Pasteboard to your workflow.&lt;/p&gt;</description>
+    </item><item>
+      <title>Multiple app instances and scripting weirdness</title>
+      <link>https://www.deanishe.net/snippet/multiple-app-instances/</link>
+      <pubDate>Fri, 23 Jun 2017 10:12:40 +0200</pubDate>
+      <guid>https://www.deanishe.net/snippet/multiple-app-instances/</guid>
+      <description>&lt;p&gt;It&#39;s possible to start multiple instances of an application with &lt;code&gt;open -n&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;#!/bin/bash
+# First instance of application
+open -a &#39;Safari&#39; &#39;https://www.google.com&#39;
+# Open a second application process
+open -n -a &#39;Safari&#39; &#39;https://www.yahoo.com&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Any subsequent calls to &lt;code&gt;Safari&lt;/code&gt; via AppleScript will go to the newest instance of the application, but weirdly, JXA calls go to the first:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;#!/bin/bash
+open -a &#39;Safari&#39; &#39;https://www.google.com&#39;
+sleep 10  # give app and page time to load
+osascript -l JavaScript -e &amp;quot;Application(&#39;Safari&#39;).windows[0].currentTab.name()&amp;quot;
+# Google
+osascript -e &#39;tell application &amp;quot;Safari&amp;quot; to return the name of the current tab of the first window as text&#39;
+# Google
+
+# Open a new instance
+open -n -a &#39;Safari&#39; &#39;https://www.yahoo.com&#39;
+sleep 10  # give app and page time to load
+osascript -l JavaScript -e &amp;quot;Application(&#39;Safari&#39;).windows[0].currentTab.name()&amp;quot;
+# Google
+osascript -e &#39;tell application &amp;quot;Safari&amp;quot; to return the name of the current tab of the first window as text&#39;
+# Yahoo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To talk to a specific instance, sort them by PID. The lowest PID is the oldest instance, the highest the newest:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// Compare PIDs
+function sortByPid(proc1, proc2) {
+    var pid1 = proc1.unixId()
+    var pid2 = proc2.unixId()
+    if (pid1 &amp;lt; pid2) return -1
+    if (pid2 &amp;lt; pid1) return 1
+    return 0
+}
+
+// Return array of processes, sorted by PID
+function namedProcesses(name) {
+    var results = []
+    var procs = Application(&#39;System Events&#39;).processes.whose({name: name})
+    for (i=0; i&amp;lt;procs.length;i++) {
+        results.push(procs[i])
+    }
+    results.sort(sortByPid)
+    return results
+}
+
+function run() {
+    var procs = namedProcesses(&#39;Safari&#39;)
+    var oldest = procs[0]
+    var newest = procs[procs.length-1]
+    console.log(&#39;oldest proc (&#39; + newest.unixId() + &#39;)&#39;, oldest)
+    console.log(&#39;newest proc (&#39; + oldest.unixId() + &#39;)&#39;, newest)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Unfortunately, I haven&#39;t yet figured out how to get a Safari &lt;code&gt;Application&lt;/code&gt; from the Safari &lt;code&gt;Process&lt;/code&gt; object returned by System Events.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,13 @@
+{
+  "alfredworkflow" : {
+    "category" : "Paths",
+    "readme" : "This workflow contains a single File Action that moves the selected files to a new directory.\n\nIt only works if all files\/folders are in the same directory.",
+    "createdby" : "Dean Jackson <deanishe@deanishe.net>",
+    "downloadurl" : "https://www.deanishe.net/post/2019/06/workflow-new-directory-with-selection/New%20Directory%20With%20Selection.alfredworkflow",
+    "version" : "0.1",
+    "bundleid" : "net.deanishe.alfred.new-dir-with-selection",
+    "description" : "File Action to make new directory with selected finder items",
+    "name" : "New Directory With Selection",
+    "webaddress" : "https:\/\/www.deanishe.net\/post\/2019\/06\/workflow-new-directory-with-selection\/"
+  }
+}

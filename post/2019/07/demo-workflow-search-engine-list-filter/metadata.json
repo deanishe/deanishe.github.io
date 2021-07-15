@@ -1,0 +1,13 @@
+{
+  "alfredworkflow" : {
+    "category" : "",
+    "readme" : "My Searches\n===========\n\nChoose from a list of search engines, then enter the query to search for.",
+    "createdby" : "Dean Jackson <deanishe@deanishe.net>",
+    "downloadurl" : "https://www.deanishe.net/post/2019/07/demo-workflow-search-engine-list-filter/My%20Searches-0.0.1.alfredworkflow",
+    "version" : "0.0.1",
+    "bundleid" : "net.deanishe.alfred.site-searches",
+    "description" : "Choose a site to search",
+    "name" : "My Searches",
+    "webaddress" : "https:\/\/www.deanishe.net\/post\/2019\/07\/workflow-demo-search-engine-list\/"
+  }
+}

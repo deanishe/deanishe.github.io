@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://www.deanishe.net/platforms/alfred/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/alfred-workflow/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/export/</loc>
+    <lastmod>2021-05-05T18:27:17+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/platforms/macos/</loc>
+    <lastmod>2021-05-05T18:27:17+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/microsoft/</loc>
+    <lastmod>2021-05-05T18:27:17+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/platforms/microsoft-word/</loc>
+    <lastmod>2021-05-05T18:27:17+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/pdf/</loc>
+    <lastmod>2021-05-05T18:27:17+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/platforms/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/post/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/word/</loc>
+    <lastmod>2021-05-05T18:27:17+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/post/2021/05/workflow-word-to-pdf/</loc>
+    <lastmod>2021-05-05T18:27:17+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/alfred/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/post/2021/04/common-misspellings-snippets-for-alfred/</loc>
+    <lastmod>2021-04-24T22:17:41+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/snippets/</loc>
+    <lastmod>2021-04-24T22:17:41+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/spelling/</loc>
+    <lastmod>2021-04-24T22:17:41+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/macos/</loc>
+    <lastmod>2020-06-22T13:22:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/python/</loc>
+    <lastmod>2020-06-22T13:22:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/shortcuts/</loc>
+    <lastmod>2020-06-22T13:22:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/snippet/macos-shortcuts-to-alfred-snippets/</loc>
+    <lastmod>2020-06-22T13:22:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/demo/</loc>
+    <lastmod>2020-06-13T14:37:34+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/post/2020/06/demo-workflow-random-images/</loc>
+    <lastmod>2020-06-13T14:37:34+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/calendar/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/platforms/google-meet/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/google-meet/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/platforms/lync/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/lync/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/platforms/microsoft-teams/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/ms-teams/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/video-conference/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/post/2020/05/workflow-video-conferences/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/platforms/zoom/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/zoom/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/cli/</loc>
+    <lastmod>2020-02-16T23:03:26+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/pasteboard/</loc>
+    <lastmod>2020-02-16T23:03:26+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/snippet/swift-pasteboard/</loc>
+    <lastmod>2020-02-16T23:03:26+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/platforms/swift/</loc>
+    <lastmod>2020-02-16T23:03:26+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/swift/</loc>
+    <lastmod>2020-02-16T23:03:26+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/google/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/alfred-gcal-workflow/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/google-calendar/</loc>
+    <lastmod>2021-06-17T10:04:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/bookmarks/</loc>
+    <lastmod>2019-12-08T11:46:02+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/chrome/</loc>
+    <lastmod>2019-12-08T11:46:02+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/pinboard/</loc>
+    <lastmod>2019-12-08T11:46:02+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/snippet/pinboard-bookmarks-to-chrome/</loc>
+    <lastmod>2019-12-08T11:46:02+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/post/2019/07/demo-workflow-search-engine-list-filter/</loc>
+    <lastmod>2019-07-26T23:04:58+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/post/2019/07/demo-workflow-directory-size/</loc>
+    <lastmod>2019-07-26T21:11:23+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/platforms/chromium/</loc>
+    <lastmod>2019-06-09T11:52:17+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/chromium/</loc>
+    <lastmod>2019-06-09T11:52:17+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/jxa/</loc>
+    <lastmod>2019-09-14T05:03:46+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/platforms/vivaldi/</loc>
+    <lastmod>2019-06-09T11:52:17+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/vivaldi/</loc>
+    <lastmod>2019-06-09T11:52:17+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/post/2019/06/workflow-search-in-app/</loc>
+    <lastmod>2019-09-14T05:03:46+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/post/2019/06/workflow-vivaldi-bookmarks/</loc>
+    <lastmod>2019-06-09T11:52:17+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/platforms/firefox/</loc>
+    <lastmod>2019-07-26T23:04:58+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/firefox/</loc>
+    <lastmod>2019-07-26T23:04:58+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/post/2019/06/workflow-firefox-bookmarks/</loc>
+    <lastmod>2019-07-26T23:04:58+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/file-action/</loc>
+    <lastmod>2019-06-03T10:20:44+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/post/2019/06/workflow-new-directory-with-selection/</loc>
+    <lastmod>2019-06-03T10:20:44+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/post/2019/05/workflow-suffix-web-search/</loc>
+    <lastmod>2020-03-22T10:27:27+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/hostname/</loc>
+    <lastmod>2019-03-25T18:55:31+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/network/</loc>
+    <lastmod>2019-03-25T18:55:31+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/snippet/mac-hostname/</loc>
+    <lastmod>2019-03-25T18:55:31+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/post/2018/12/demo-workflow-mods-and-filters/</loc>
+    <lastmod>2020-06-13T10:33:17+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/post/2018/12/demo-workflow-validate-email-address/</loc>
+    <lastmod>2018-12-27T21:17:38+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/snippet/create-alfred-environment/</loc>
+    <lastmod>2020-04-23T22:12:17+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/environment/</loc>
+    <lastmod>2020-04-23T22:12:17+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/plist/</loc>
+    <lastmod>2020-04-23T22:12:17+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/shell/</loc>
+    <lastmod>2020-04-23T22:12:17+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/guide/</loc>
+    <lastmod>2021-04-05T11:39:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/tutorial/</loc>
+    <lastmod>2021-04-05T11:39:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/variables/</loc>
+    <lastmod>2021-04-05T11:39:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/post/2018/10/workflow/environment-variables-in-alfred/</loc>
+    <lastmod>2021-04-05T11:39:01+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/applescript/</loc>
+    <lastmod>2018-12-27T15:01:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/post/2018/02/demo-workflow-split-query-into-two-words/</loc>
+    <lastmod>2018-12-27T15:01:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/apps/</loc>
+    <lastmod>2018-12-26T00:21:49+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/snippet/multiple-app-instances/</loc>
+    <lastmod>2018-12-26T00:21:49+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/snippet/workflow-build/</loc>
+    <lastmod>2018-12-26T00:21:49+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/platforms/python/</loc>
+    <lastmod>2019-12-08T11:46:02+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/text/</loc>
+    <lastmod>2019-12-08T11:46:02+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/snippet/py-text-table/</loc>
+    <lastmod>2019-12-08T11:46:02+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/snippet/auto-swap-alfred-theme/</loc>
+    <lastmod>2018-12-26T00:21:49+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/flux/</loc>
+    <lastmod>2018-12-26T00:21:49+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/launchd/</loc>
+    <lastmod>2018-12-26T00:21:49+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/tags/theme/</loc>
+    <lastmod>2018-12-26T00:21:49+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/link/</loc>
+    <lastmod>2018-12-26T00:21:49+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/post/2016/12/first-post/</loc>
+    <lastmod>2018-12-26T00:21:49+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/activity/</loc>
+    <lastmod>2018-12-26T00:21:49+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/weather/</loc>
+    <lastmod>2016-12-23T19:35:14+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/project/</loc>
+    <lastmod>2018-12-26T00:21:49+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/snippet/</loc>
+    <lastmod>2018-12-26T00:21:49+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/</loc>
+    <lastmod>2018-12-25T19:39:24+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/about/</loc>
+    <lastmod>2019-07-26T23:04:58+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.deanishe.net/categories/</loc>
+  </url>
+  
+</urlset>

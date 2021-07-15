@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Platforms on deanishe.net</title>
+    <link>https://www.deanishe.net/platforms/</link>
+    <description>Recent content in Platforms on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/platforms/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Alfred</title>
+      <link>https://www.deanishe.net/platforms/alfred/</link>
+      <pubDate>Wed, 05 May 2021 18:25:00 +0200</pubDate>
+      <guid>https://www.deanishe.net/platforms/alfred/</guid>
+      <description></description>
+    </item><item>
+      <title>macOS</title>
+      <link>https://www.deanishe.net/platforms/macos/</link>
+      <pubDate>Wed, 05 May 2021 18:25:00 +0200</pubDate>
+      <guid>https://www.deanishe.net/platforms/macos/</guid>
+      <description></description>
+    </item><item>
+      <title>Microsoft Word</title>
+      <link>https://www.deanishe.net/platforms/microsoft-word/</link>
+      <pubDate>Wed, 05 May 2021 18:25:00 +0200</pubDate>
+      <guid>https://www.deanishe.net/platforms/microsoft-word/</guid>
+      <description></description>
+    </item><item>
+      <title>Google Meet</title>
+      <link>https://www.deanishe.net/platforms/google-meet/</link>
+      <pubDate>Fri, 01 May 2020 12:06:23 +0200</pubDate>
+      <guid>https://www.deanishe.net/platforms/google-meet/</guid>
+      <description></description>
+    </item><item>
+      <title>Lync</title>
+      <link>https://www.deanishe.net/platforms/lync/</link>
+      <pubDate>Fri, 01 May 2020 12:06:23 +0200</pubDate>
+      <guid>https://www.deanishe.net/platforms/lync/</guid>
+      <description></description>
+    </item><item>
+      <title>Microsoft Teams</title>
+      <link>https://www.deanishe.net/platforms/microsoft-teams/</link>
+      <pubDate>Fri, 01 May 2020 12:06:23 +0200</pubDate>
+      <guid>https://www.deanishe.net/platforms/microsoft-teams/</guid>
+      <description></description>
+    </item><item>
+      <title>Zoom</title>
+      <link>https://www.deanishe.net/platforms/zoom/</link>
+      <pubDate>Fri, 01 May 2020 12:06:23 +0200</pubDate>
+      <guid>https://www.deanishe.net/platforms/zoom/</guid>
+      <description></description>
+    </item><item>
+      <title>Swift</title>
+      <link>https://www.deanishe.net/platforms/swift/</link>
+      <pubDate>Sun, 16 Feb 2020 22:54:57 +0100</pubDate>
+      <guid>https://www.deanishe.net/platforms/swift/</guid>
+      <description></description>
+    </item><item>
+      <title>Chromium</title>
+      <link>https://www.deanishe.net/platforms/chromium/</link>
+      <pubDate>Sun, 09 Jun 2019 00:00:00 +0000</pubDate>
+      <guid>https://www.deanishe.net/platforms/chromium/</guid>
+      <description></description>
+    </item><item>
+      <title>Vivaldi</title>
+      <link>https://www.deanishe.net/platforms/vivaldi/</link>
+      <pubDate>Sun, 09 Jun 2019 00:00:00 +0000</pubDate>
+      <guid>https://www.deanishe.net/platforms/vivaldi/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

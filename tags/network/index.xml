@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>network on deanishe.net</title>
+    <link>https://www.deanishe.net/tags/network/</link>
+    <description>Recent content in network on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/tags/network/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Set the hostname on macOS</title>
+      <link>https://www.deanishe.net/snippet/mac-hostname/</link>
+      <pubDate>Mon, 25 Mar 2019 00:00:00 +0000</pubDate>
+      <guid>https://www.deanishe.net/snippet/mac-hostname/</guid>
+      <description>&lt;p&gt;Use &lt;code&gt;scutil&lt;/code&gt; to set a Mac&#39;s FQDN.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo scutil --set HostName fqdn.example.com
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;other-commands&#34;&gt;Other commands&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;scutil --get HostName        # fqdn, same as hostname -f
+scutil --get LocalHostName   # same as hostname -s
+scutil --get ComputerName    # your computer&#39;s &amp;quot;friendly&amp;quot; name
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;more-info&#34;&gt;More info&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://ss64.com/osx/scutil.html&#34;&gt;manpage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/tldr-pages/tldr/blob/master/pages/osx/scutil&#34;&gt;tldr&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+  </channel>
+</rss>

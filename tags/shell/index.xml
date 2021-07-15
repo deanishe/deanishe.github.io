@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>shell on deanishe.net</title>
+    <link>https://www.deanishe.net/tags/shell/</link>
+    <description>Recent content in shell on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/tags/shell/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Copying Alfred&#39;s environment to your shell</title>
+      <link>https://www.deanishe.net/snippet/create-alfred-environment/</link>
+      <pubDate>Sat, 08 Dec 2018 00:00:00 +0000</pubDate>
+      <guid>https://www.deanishe.net/snippet/create-alfred-environment/</guid>
+      <description>&lt;p&gt;A simple script to create an Alfred-like environment in your shell
+by extracting and exporting variables from info.plist.&lt;/p&gt;
+&lt;p&gt;Alfred uses &lt;a href=&#34;https://www.alfredapp.com/help/workflows/script-environment-variables/&#34; title=&#34;Alfred&#39;s environment variables&#34;&gt;environment variables&lt;/a&gt; to pass some important
+information to your workflow code, like the paths to the data and cache
+directories.&lt;/p&gt;
+&lt;p&gt;Source the following script in your shell and/or test runner to extract
+Alfred workflow variables from &lt;code&gt;info.plist&lt;/code&gt;:&lt;/p&gt;
+
+
+  
+  
+&lt;div class=&#34;code&#34;&gt;
+  &lt;header&gt;
+    &lt;div class=&#34;filename&#34;&gt;alfredenv.sh&lt;/div&gt;
+    &lt;a class=&#34;rawlink&#34; href=&#34;alfredenv.sh&#34;&gt;view raw&lt;/a&gt;
+  &lt;/header&gt;
+  &lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;# When sourced, creates an Alfred-like environment
+
+# getvar &amp;lt;name&amp;gt; | Read a value from info.plist
+getvar() {
+    local v=&amp;#34;$1&amp;#34;
+    /usr/libexec/PlistBuddy -c &amp;#34;Print :$v&amp;#34; info.plist
+}
+
+# Minimal workflow settings
+export alfred_workflow_bundleid=$( getvar &amp;#34;bundleid&amp;#34; )
+export alfred_workflow_name=$( getvar &amp;#34;name&amp;#34; )
+# Required if you&amp;#39;re using AwGo&amp;#39;s built-in update mechanism
+export alfred_workflow_version=$( getvar &amp;#34;version&amp;#34; )
+
+# Check for new prefs.json file introduced in Alfred 4
+if [[ -f &amp;#34;${HOME}/Library/Alfred/Application Support/prefs.json&amp;#34; ]]; then
+    # Standard locations of Alfred 4&amp;#43; cache &amp;amp; data directories
+    export alfred_workflow_cache=&amp;#34;${HOME}/Library/Caches/com.runningwithcrayons.Alfred/Workflow Data/${alfred_workflow_bundleid}&amp;#34;
+    export alfred_workflow_data=&amp;#34;${HOME}/Library/Application Support/Alfred/Workflow Data/${alfred_workflow_bundleid}&amp;#34;
+else
+    # Assume Alfred 3
+    export alfred_workflow_cache=&amp;#34;${HOME}/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/${alfred_workflow_bundleid}&amp;#34;
+    export alfred_workflow_data=&amp;#34;${HOME}/Library/Application Support/Alfred 3/Workflow Data/${alfred_workflow_bundleid}&amp;#34;
+    export alfred_version=&amp;#34;3.8&amp;#34;
+fi
+
+# Turn debugging on
+# export alfred_debug=1
+
+# If you want to extract workflow variables set in the workflow
+# configuration sheet:
+# export SCHEDULE_DAYS=$( getvar &amp;#34;variables:SCHEDULE_DAYS&amp;#34; )
+# export EVENT_CACHE_MINS=$( getvar &amp;#34;variables:EVENT_CACHE_MINS&amp;#34; )&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</description>
+    </item>
+  </channel>
+</rss>

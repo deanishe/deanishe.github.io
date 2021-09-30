@@ -13,6 +13,7 @@ from __future__ import print_function, absolute_import
 
 from collections import namedtuple
 import csv
+from io import BytesIO
 import json
 import os
 from os.path import expanduser, join, realpath
@@ -49,7 +50,8 @@ def log(s, *args, **kwargs):
 def load_shortcuts():
     """Read shortcuts from system SQLite database."""
     output = check_output(['/usr/bin/sqlite3', '-csv', DBPATH, QUERY])
-    reader = csv.reader(output.split('\n'), delimiter=',', quotechar='"')
+
+    reader = csv.reader(BytesIO(output), delimiter=',', quotechar='"')
     shortcuts = []
     for row in reader:
         if len(row) == 3:

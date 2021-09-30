@@ -6,7 +6,7 @@
     <description>Recent content in python on deanishe.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-GB</language>
-    <lastBuildDate>Fri, 16 Jul 2021 01:21:30 +0200</lastBuildDate>
+    <lastBuildDate>Thu, 30 Sep 2021 09:38:40 +0200</lastBuildDate>
     <atom:link href="https://www.deanishe.net/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Sync macOS Shortcuts to Alfred Snippets</title>
@@ -53,6 +53,7 @@ from __future__ import print_function, absolute_import
 
 from collections import namedtuple
 import csv
+from io import BytesIO
 import json
 import os
 from os.path import expanduser, join, realpath
@@ -89,7 +90,8 @@ def log(s, *args, **kwargs):
 def load_shortcuts():
     &amp;#34;&amp;#34;&amp;#34;Read shortcuts from system SQLite database.&amp;#34;&amp;#34;&amp;#34;
     output = check_output([&amp;#39;/usr/bin/sqlite3&amp;#39;, &amp;#39;-csv&amp;#39;, DBPATH, QUERY])
-    reader = csv.reader(output.split(&amp;#39;\n&amp;#39;), delimiter=&amp;#39;,&amp;#39;, quotechar=&amp;#39;&amp;#34;&amp;#39;)
+
+    reader = csv.reader(BytesIO(output), delimiter=&amp;#39;,&amp;#39;, quotechar=&amp;#39;&amp;#34;&amp;#39;)
     shortcuts = []
     for row in reader:
         if len(row) == 3:

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>podcasts on deanishe.net</title>
+    <link>https://www.deanishe.net/tags/podcasts/</link>
+    <description>Recent content in podcasts on deanishe.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Wed, 26 Oct 2022 11:41:07 +0200</lastBuildDate>
+    <atom:link href="https://www.deanishe.net/tags/podcasts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Get RSS feed URL for iTunes Podcast ID</title>
+      <link>https://www.deanishe.net/post/2022/10/get-rss-feed-url-for-itunes-podcast-id/</link>
+      <pubDate>Wed, 26 Oct 2022 11:09:46 +0200</pubDate>
+      <guid>https://www.deanishe.net/post/2022/10/get-rss-feed-url-for-itunes-podcast-id/</guid>
+      <description>&lt;p&gt;For when you want the RSS feed, but they&#39;ve only got &amp;ldquo;Subscribe in XYZ…&amp;rdquo; links.&lt;/p&gt;
+&lt;p&gt;Enter the URL of an iTunes podcast preview page (or the podcast&#39;s iTunes ID) and get the URL of the podcast&#39;s actual feed back.&lt;/p&gt;
+&lt;style&gt;
+.itunes-icon svg {
+  height: 28px;
+  width: 28px;
+  fill: #9C2DD0;
+}
+
+#itunes2rss {
+  margin: 0.6rem 0;
+  padding: 0.3rem;
+  max-width: 400px;
+}
+#itunes2rss .notification {
+  text-align: center;
+  font-weight: bold;
+  padding: 1.2rem 0;
+}
+#itunes2rss .podcast-form &gt; div + div {
+  margin-top: 0.6rem;
+}
+#itunes2rss .podcast-form &gt; div {
+  display: flex;
+  justify-content: space-between;
+}
+#itunes2rss .podcast-form &gt; div &gt; * {
+  flex: initial;
+}
+#itunes2rss .podcast-form &gt; div .podcast-id, #itunes2rss .podcast-form &gt; div .feed-url {
+  flex: auto;
+}
+#itunes2rss .podcast-form &gt; div button {
+  margin-left: 0.6rem;
+}
+#itunes2rss .podcast-form &gt; div button svg {
+  height: 16px;
+  width: 16px;
+}
+&lt;/style&gt;
+&lt;h2&gt;
+    &lt;span class=&#34;itunes-icon&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; viewBox=&#34;0 0 448 512&#34;&gt;&lt;defs&gt;&lt;style&gt;.fa-secondary{opacity:.4}&lt;/style&gt;&lt;/defs&gt;&lt;path d=&#34;M224 0A223.88 223.88.0 0 0 0 224c0 90 52.6 165.65 125.74 201.41a6 6 0 0 0 8.53-6.31c-2.38-15.51-4.34-31-5.4-44.34a6 6 0 0 0-2.68-4.51A176 176 0 0 1 48 222.9c.59-96.24 79.29-174.65 175.53-174.9C320.79 47.75 4e2 126.8 4e2 224a176 176 0 0 1-80.65 147.87c-1 14-3.07 30.59-5.62 47.23a6 6 0 0 0 8.53 6.31C395.23 389.73 448 314.19 448 224A223.89 223.89.0 0 0 224 0zm98.45 325A143.63 143.63.0 0 0 368 216.43c-1.86-76.21-63.6-138.21-139.8-140.37C146.87 73.75 80 139.21 80 220a143.62 143.62.0 0 0 45.55 105 6 6 0 0 0 9.45-1.9 66.57 66.57.0 0 1 21.24-25.36 6 6 0 0 0 .63-9.19 96 96 0 1 1 134.26.0 6 6 0 0 0 .63 9.19A66.57 66.57.0 0 1 313 323.1a6 6 0 0 0 9.45 1.9z&#34; class=&#34;fa-secondary&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M224 312c-32.86.0-64 8.59-64 43.75.0 33.15 12.93 104.38 20.57 132.81 5.14 19 24.57 23.44 43.43 23.44s38.29-4.43 43.43-23.44c7.7-28.63 20.57-99.86 20.57-132.81.0-35.16-31.14-43.75-64-43.75zm0-24a64 64 0 1 0-64-64 64 64 0 0 0 64 64z&#34; class=&#34;fa-primary&#34;&gt;&lt;/path&gt;&lt;/svg&gt;
+    &lt;span&gt;iTunes &amp;#x2192; RSS Feed&lt;/span&gt;
+&lt;/h2&gt;
+&lt;div id=&#34;itunes2rss&#34;&gt;
+  &lt;form class=&#34;podcast-form&#34;&gt;
+    &lt;div&gt;
+      &lt;label for=&#34;podcast-id&#34;&gt;Enter URL or ID of an iTunes podcast here:&lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;input id=&#34;podcast-id&#34; class=&#34;podcast-id&#34; placeholder=&#34;Podcast ID&#34;
+      size=&#34;10&#34; minlength=&#34;1&#34; required/&gt;
+      &lt;button class=&#34;find-button&#34;&gt;Find RSS Feed&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;input type=&#34;text&#34; class=&#34;feed-url&#34; readonly
+        placeholder=&#34;URL of RSS feed&#34;/&gt;
+      &lt;button class=&#34;copy-button&#34;&gt;
+        &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; viewBox=&#34;0 0 384 512&#34;&gt;&lt;defs&gt;&lt;style&gt;.fa-secondary{opacity:.4}&lt;/style&gt;&lt;/defs&gt;&lt;path d=&#34;M336 63h-80v1a64 64 0 0 1 64 64H64a64 64 0 0 1 64-64v-1H48a48 48 0 0 0-48 48v352a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V111a48 48 0 0 0-48-48z&#34; class=&#34;fa-secondary&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M256 64a64 64 0 0 0-128 0 64 64 0 0 0-64 64h256a64 64 0 0 0-64-64zm-64 24a24 24 0 1 1 24-24 23.94 23.94.0 0 1-24 24z&#34; class=&#34;fa-primary&#34;&gt;&lt;/path&gt;&lt;/svg&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+  &lt;div class=&#34;notification&#34;&gt;&lt;/div&gt;
+&lt;/div&gt;
+  &lt;script src=&#34;_itunes.js&#34;&gt;&lt;/script&gt;
+  &lt;script&gt;
+    iTunes2Rss(&#39;#itunes2rss&#39;);
+  &lt;/script&gt;&lt;blockquote&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+  </channel>
+</rss>

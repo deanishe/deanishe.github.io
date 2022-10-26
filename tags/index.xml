@@ -6,9 +6,27 @@
     <description>Recent content in Tags on deanishe.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-GB</language>
-    <lastBuildDate>Thu, 30 Sep 2021 09:38:40 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 26 Oct 2022 11:41:07 +0200</lastBuildDate>
     <atom:link href="https://www.deanishe.net/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>itunes</title>
+      <link>https://www.deanishe.net/tags/itunes/</link>
+      <pubDate>Wed, 26 Oct 2022 11:09:46 +0200</pubDate>
+      <guid>https://www.deanishe.net/tags/itunes/</guid>
+      <description></description>
+    </item><item>
+      <title>podcasts</title>
+      <link>https://www.deanishe.net/tags/podcasts/</link>
+      <pubDate>Wed, 26 Oct 2022 11:09:46 +0200</pubDate>
+      <guid>https://www.deanishe.net/tags/podcasts/</guid>
+      <description></description>
+    </item><item>
+      <title>rss</title>
+      <link>https://www.deanishe.net/tags/rss/</link>
+      <pubDate>Wed, 26 Oct 2022 11:09:46 +0200</pubDate>
+      <guid>https://www.deanishe.net/tags/rss/</guid>
+      <description></description>
+    </item><item>
       <title>alfred-workflow</title>
       <link>https://www.deanishe.net/tags/alfred-workflow/</link>
       <pubDate>Wed, 05 May 2021 18:25:00 +0200</pubDate>
@@ -49,24 +67,6 @@
       <link>https://www.deanishe.net/tags/snippets/</link>
       <pubDate>Sat, 24 Apr 2021 22:06:01 +0200</pubDate>
       <guid>https://www.deanishe.net/tags/snippets/</guid>
-      <description></description>
-    </item><item>
-      <title>spelling</title>
-      <link>https://www.deanishe.net/tags/spelling/</link>
-      <pubDate>Sat, 24 Apr 2021 22:06:01 +0200</pubDate>
-      <guid>https://www.deanishe.net/tags/spelling/</guid>
-      <description></description>
-    </item><item>
-      <title>macos</title>
-      <link>https://www.deanishe.net/tags/macos/</link>
-      <pubDate>Mon, 22 Jun 2020 12:04:12 +0200</pubDate>
-      <guid>https://www.deanishe.net/tags/macos/</guid>
-      <description></description>
-    </item><item>
-      <title>python</title>
-      <link>https://www.deanishe.net/tags/python/</link>
-      <pubDate>Mon, 22 Jun 2020 12:04:12 +0200</pubDate>
-      <guid>https://www.deanishe.net/tags/python/</guid>
       <description></description>
     </item>
   </channel>

@@ -71,7 +71,6 @@ def get_chrome_profiles():
     with open(os.path.join(dirpath, 'Local State')) as fp:
         state = json.load(fp)
     for dirname, data in state['profile']['info_cache'].items():
-        name = data['name']
         p = Profile(data['name'], os.path.join(dirpath, dirname))
         profiles.append(p)
 
